@@ -218,3 +218,10 @@ D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerc
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.genruntimeconfig.cache
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\bin\Debug\net5.0\libman.json
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Views\Home\Test.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Cart\Create.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Cart\Delete.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Cart\Details.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Cart\Edit.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Cart\Index.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\_ViewStart.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\_ViewImports.cshtml.g.cs
