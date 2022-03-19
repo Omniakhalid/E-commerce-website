@@ -19,6 +19,7 @@ namespace E_commerce_website.Models
         public int CategoryID { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string CategoryName { get; set; }
 
         [InverseProperty(nameof(Product.ProductCategory))]

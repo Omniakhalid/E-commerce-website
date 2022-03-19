@@ -20,13 +20,16 @@ namespace E_commerce_website.Models
         public int VendorID { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string VendorName { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string Address { get; set; }
         public int Phone { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string City { get; set; }
         [Required]
         [StringLength(10)]

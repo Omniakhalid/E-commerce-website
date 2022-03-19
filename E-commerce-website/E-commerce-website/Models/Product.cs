@@ -12,6 +12,7 @@ namespace E_commerce_website.Models
     {
         public Product()
         {
+            CartItems = new HashSet<CartItem>();
             OrderDetails = new HashSet<OrderDetail>();
             ProductOptions = new HashSet<ProductOption>();
         }
@@ -20,16 +21,20 @@ namespace E_commerce_website.Models
         public int ProductID { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
         public double? ProductWeight { get; set; }
         [Required]
         [StringLength(250)]
+        
         public string ProductShortDes { get; set; }
         [StringLength(3000)]
+        
         public string ProductLongDes { get; set; }
         [Required]
         [StringLength(200)]
+        
         public string ProductImage { get; set; }
         public int ProductCategoryID { get; set; }
         public byte[] ProductUpdateDate { get; set; }
@@ -42,6 +47,8 @@ namespace E_commerce_website.Models
         [ForeignKey(nameof(VendorID))]
         [InverseProperty("Products")]
         public virtual Vendor Vendor { get; set; }
+        [InverseProperty(nameof(CartItem.Product))]
+        public virtual ICollection<CartItem> CartItems { get; set; }
         [InverseProperty(nameof(OrderDetail.DetailProduct))]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [InverseProperty(nameof(ProductOption.Product))]

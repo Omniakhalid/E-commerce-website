@@ -14,6 +14,10 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[CartItems]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[OptionGroups]",
          "ObjectType": 0
       },
@@ -50,7 +54,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "DESKTOP-P84ETB9\\MSSQLSERVER01.OnlineShopping",
+   "UiHint": "(LocalDb)\\MSSQLLocalDB.OnlineShopping",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

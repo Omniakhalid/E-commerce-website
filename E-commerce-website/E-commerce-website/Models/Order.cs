@@ -38,10 +38,13 @@ namespace E_commerce_website.Models
         public string OrderCity { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string CustomerPhone { get; set; }
         [StringLength(50)]
+        
         public string OrderPhone { get; set; }
         [StringLength(50)]
+        
         public string OrderEmail { get; set; }
 
         [ForeignKey(nameof(UserID))]

@@ -16,10 +16,10 @@ namespace E_commerce_website.Models
         public int DetailProductID { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string DetailName { get; set; }
         public int Quanity { get; set; }
         public double Price { get; set; }
-        public int CartID { get; set; }
 
         [ForeignKey(nameof(DetailOrderID))]
         [InverseProperty(nameof(Order.OrderDetails))]

@@ -19,6 +19,7 @@ namespace E_commerce_website.Models
         public int OptionID { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string OptionName { get; set; }
         public int OptionGroupID { get; set; }
 

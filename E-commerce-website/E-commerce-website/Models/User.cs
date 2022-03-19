@@ -12,6 +12,7 @@ namespace E_commerce_website.Models
     {
         public User()
         {
+            CartItems = new HashSet<CartItem>();
             Orders = new HashSet<Order>();
         }
 
@@ -22,12 +23,15 @@ namespace E_commerce_website.Models
         public string UserEmail { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string UserPassword { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string UserFirstName { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string UserLastName { get; set; }
         [Required]
         [StringLength(10)]
@@ -37,20 +41,27 @@ namespace E_commerce_website.Models
         public byte[] UserRegisterDate { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string UserVerficationCode { get; set; }
         public int UserIP { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string UserPhone { get; set; }
         [Required]
         [StringLength(50)]
+        
         public string UserCountry { get; set; }
         [Required]
         [StringLength(100)]
+        
         public string UserAddress { get; set; }
         [StringLength(100)]
+        
         public string UserAddress2 { get; set; }
 
+        [InverseProperty(nameof(CartItem.User))]
+        public virtual ICollection<CartItem> CartItems { get; set; }
         [InverseProperty(nameof(Order.User))]
         public virtual ICollection<Order> Orders { get; set; }
     }

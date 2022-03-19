@@ -5,13 +5,16 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using E_commerce_website.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace E_commerce_website.onlineDbContext
 {
     public partial class OnlineshoppingContext : DbContext
     {
+        public IConfiguration Configuration { get; private set; }
         public OnlineshoppingContext()
         {
+            //Configuration = configuration;
         }
 
         public OnlineshoppingContext(DbContextOptions<OnlineshoppingContext> options)
@@ -19,6 +22,7 @@ namespace E_commerce_website.onlineDbContext
         {
         }
 
+        public virtual DbSet<CartItem> CartItems { get; set; }
         public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<OptionGroup> OptionGroups { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -29,17 +33,32 @@ namespace E_commerce_website.onlineDbContext
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-P84ETB9\\MSSQLSERVER01;Initial Catalog=OnlineShopping;Integrated Security=True");
+                optionsBuilder.UseSqlServer(optionsBuilder.GetConnectionString("DefualtConnection"));
             }
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CartItem>(entity =>
+            {
+                entity.HasKey(e => new { e.id, e.UserID });
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.CartItems)
+                    .HasForeignKey(d => d.ProductID)
+                    .HasConstraintName("FK_CartItems_Products");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.CartItems)
+                    .HasForeignKey(d => d.UserID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CartItems_Users");
+            });
+
             modelBuilder.Entity<Option>(entity =>
             {
                 entity.Property(e => e.OptionID).ValueGeneratedNever();
