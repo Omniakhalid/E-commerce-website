@@ -5,16 +5,13 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using E_commerce_website.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace E_commerce_website.onlineDbContext
 {
     public partial class OnlineshoppingContext : DbContext
     {
-        public IConfiguration Configuration { get; private set; }
         public OnlineshoppingContext()
         {
-            //Configuration = configuration;
         }
 
         public OnlineshoppingContext(DbContextOptions<OnlineshoppingContext> options)
@@ -33,23 +30,25 @@ namespace E_commerce_website.onlineDbContext
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
 
-      /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(optionsBuilder.GetConnectionString("DefualtConnection"));
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=OnlineShopping;Integrated Security=True");
             }
-        }*/
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>(entity =>
             {
-                entity.HasKey(e => new { e.id, e.UserID });
+                entity.HasKey(e => new { e.id, e.UserID, e.ProductID });
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.CartItems)
                     .HasForeignKey(d => d.ProductID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CartItems_Products");
 
                 entity.HasOne(d => d.User)

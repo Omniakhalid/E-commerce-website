@@ -5,7 +5,6 @@
 namespace AspNetCore
 {
     #line hidden
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -26,8 +25,15 @@ using E_commerce_website.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\Views\_ViewImports.cshtml"
+using System;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"102a1a6333243d20e5871779255e051ccba2abbe", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5d96a8c654f59bbef4c6a59485bbd570296453d3", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1ad136efa8fd8ab027cf80a3fefefd5d72afadad", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("action", new global::Microsoft.AspNetCore.Html.HtmlString("#"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -66,7 +72,7 @@ using E_commerce_website.Models;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n\r\n\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102a1a6333243d20e5871779255e051ccba2abbe4061", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102a1a6333243d20e5871779255e051ccba2abbe4253", async() => {
                 WriteLiteral(@"
   <div class=""hero_area"">
     <!-- header section strats -->
@@ -809,7 +815,7 @@ using E_commerce_website.Models;
         </div>
         <div class=""col-md-6 col-lg-5 px-0"">
           ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102a1a6333243d20e5871779255e051ccba2abbe35268", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102a1a6333243d20e5871779255e051ccba2abbe35460", async() => {
                     WriteLiteral(@"
             <div>
               <input type=""text"" placeholder=""Name"" />
@@ -973,7 +979,7 @@ using E_commerce_website.Models;
                 Newsletter
               </h5>
               ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102a1a6333243d20e5871779255e051ccba2abbe43238", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "102a1a6333243d20e5871779255e051ccba2abbe43430", async() => {
                     WriteLiteral("\r\n                <input type=\"email\" placeholder=\"Enter your email\">\r\n                <button>\r\n                  Subscribe\r\n                </button>\r\n              ");
                 }
                 );

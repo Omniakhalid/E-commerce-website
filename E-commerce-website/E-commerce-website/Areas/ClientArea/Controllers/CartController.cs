@@ -23,10 +23,29 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // GET: ClientArea/Cart
         public async Task<IActionResult> Index()
         {
-            var onlineshoppingContext = _context.CartItems.Include(c => c.Product).Include(c => c.User);
+            var onlineshoppingContext = _context.CartItems.Where(c=>c.UserID == 1)
+                                                          .Include(c => c.Product).Include(c => c.User)
+                                                          .Include(c=>c.Product.ProductCategory);
+
             return View(await onlineshoppingContext.ToListAsync());
         }
+       
+        public async Task<IActionResult> Increament(int id)
+        {
+            var cartItems = _context.CartItems.FirstOrDefault(c => c.UserID == 1 && c.ProductID == id);
+            cartItems.Quantity++;
+           _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
+        public async Task<IActionResult> Decreament(int id)
+        {
+            var cartItems = _context.CartItems.FirstOrDefault(c => c.UserID == 1 && c.ProductID == id);
+            cartItems.Quantity--;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+      
         // GET: ClientArea/Cart/Details/5
         public async Task<IActionResult> Details(int? id)
         {

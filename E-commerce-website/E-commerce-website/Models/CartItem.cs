@@ -14,7 +14,8 @@ namespace E_commerce_website.Models
         public int id { get; set; }
         [Key]
         public int UserID { get; set; }
-        public int? ProductID { get; set; }
+        [Key]
+        public int ProductID { get; set; }
         public int? Quantity { get; set; }
 
         [ForeignKey(nameof(ProductID))]
