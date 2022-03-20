@@ -1,5 +1,8 @@
 ﻿using E_commerce_website.Models;
+using E_commerce_website.onlineDbContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,16 +14,21 @@ namespace E_commerce_website.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        // private readonly ILogger<HomeController> _logger;
+        private readonly OnlineshoppingContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(OnlineshoppingContext context)
         {
-            _logger = logger;
+            // _logger = logger;
+            _context = context;
+
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var onlineshoppingContext = _context.Products;
+            return View(await onlineshoppingContext.ToListAsync());
+            //return View();
         }
 
         public IActionResult Privacy()
