@@ -35,7 +35,7 @@
                           
                     </ul>
                     <ul class="navbar-nav mr-auto">
-                          @if(!User.Identity.IsAuthenticated)
+                          @if(User.Identity.IsAuthenticated)
                             {
                                   <li class="nav-item ">
                                      <a class="nav-link text-dark float-right" asp-area="" asp-controller="" asp-action="">Orders</a>
@@ -46,11 +46,11 @@
                                      <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Cart" asp-action="Index"> <i class="fa fa-cart-flatbed"></i> Cart</a>
                                      
                                   </li>
-                                   <li class="nav-item ">
+                                  @* <li class="nav-item ">
                                      <a class="nav-link text-dark float-right" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                                  </li>
+                                  </li>*@
                             }
-                            else
+                           @* else
                             { 
                                  <li class="nav-item">
                                      <a class="nav-link text-dark float-right" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
@@ -58,10 +58,14 @@
                                    <li class="nav-item ">
                                      <a class="nav-link text-dark float-right" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
                                   </li>
-                            }
+                            }*@
+                            
                     </ul>
+                   
+                    <partial name ="_LoginPartial.cshtml"/>
 
                 </div>
+                
             </div>
         </nav>
     </header>
