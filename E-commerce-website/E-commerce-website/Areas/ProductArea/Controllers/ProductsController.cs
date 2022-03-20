@@ -70,7 +70,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             //if (ModelState.IsValid)
             if(productViewModel.ProductName!=null)
             {
-                string wwwRootPath = webHostEnvironment.WebRootPath;
+                string wwwRootPath = webHostEnvironment.WebRootPath;//GUID
                 string fileName = Path.GetFileNameWithoutExtension(productViewModel.ProductImageFile.FileName);
                 string extension = Path.GetExtension(productViewModel.ProductImageFile.FileName);
                 productViewModel.ProductImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
@@ -99,7 +99,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", productViewModel.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "Address", productViewModel.VendorID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", productViewModel.VendorID);
             return View();
         }
 
@@ -117,7 +117,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 return NotFound();
             }
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "Address", product.VendorID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
             return View(product);
         }
 
@@ -154,7 +154,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "Address", product.VendorID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
             return View(product);
         }
 

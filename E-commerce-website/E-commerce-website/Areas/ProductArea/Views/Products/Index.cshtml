@@ -64,7 +64,8 @@
                 @Html.DisplayFor(modelItem => item.ProductLongDes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductImage)
+@*                @Html.DisplayFor(modelItem => item.ProductImage)
+*@                <img src="~/dbImages/@item.ProductImage" style="width:50px; height:50px ">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductUpdateDate)
