@@ -605,6 +605,7 @@ E:\ITI_SEC\E-commerce Github\E-commerce-website\E-commerce-website\obj\Debug\net
 E:\ITI_SEC\E-commerce Github\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.pdb
 E:\ITI_SEC\E-commerce Github\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.genruntimeconfig.cache
 E:\ITI_SEC\E-commerce Github\E-commerce-website\E-commerce-website\obj\Debug\net5.0\ref\E-commerce-website.dll
+<<<<<<< HEAD
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\Create.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\Delete.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\Details.cshtml.g.cs
@@ -612,3 +613,5 @@ D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerc
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\Index.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\_ViewImports.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\_ViewStart.cshtml.g.cs
+=======
+>>>>>>> 63e5657c3b3b15477b8a83f9f5561bb8fd154006
