@@ -19,10 +19,13 @@
   <ItemGroup>
     <Folder Include="Areas\ClientArea\Data\" />
     <Folder Include="Areas\ClientArea\Models\" />
+    <Folder Include="Areas\ProductArea\Data\" />
+    <Folder Include="Areas\ProductArea\Models\" />
     <Folder Include="Areas\SellerArea\Controllers\" />
     <Folder Include="Areas\SellerArea\Data\" />
     <Folder Include="Areas\SellerArea\Models\" />
     <Folder Include="Areas\SellerArea\Views\" />
+    <Folder Include="wwwroot\dbImages\" />
   </ItemGroup>
 
 </Project>
