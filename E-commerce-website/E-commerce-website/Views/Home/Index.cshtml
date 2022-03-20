@@ -1,7 +1,13 @@
-﻿@{
+﻿@model IEnumerable<E_commerce_website.Models.Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="~/css/CartStyle.css"> 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 <body>
@@ -16,6 +22,7 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
+
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-7">
@@ -40,7 +47,10 @@
                 </div>
               </div>
             </div>
-            <div class="carousel-item ">
+            
+            @for (var i = 0; i < 2; i++)
+           {
+               <div class="carousel-item ">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-7">
@@ -65,7 +75,11 @@
                 </div>
               </div>
             </div>
-            <div class="carousel-item ">
+               
+           }
+
+
+            @*<div class="carousel-item ">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-7">
@@ -89,7 +103,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>*@
           </div>
         </div>
       </div>
@@ -109,20 +123,25 @@
         </h2>
       </div>
       <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
+
+                  @foreach(var item in Model){
+                      <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="box">
             <a href="">
-              <div class="img-box">
-                <img src="images/p1.png" alt="">
+                
+                      <div class="img-box">
+                <img src= @item.ProductImage alt="">
               </div>
               <div class="detail-box">
                 <h6>
-                  Ring
+                  @*Ring*@
+                  @item.ProductName
                 </h6>
                 <h6>
                   Price
                   <span>
-                    $200
+                    @*$200*@
+                   $@item.ProductPrice
                   </span>
                 </h6>
               </div>
@@ -131,10 +150,16 @@
                   New
                 </span>
               </div>
-            </a>
+              </a>
           </div>
         </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
+              }
+
+
+            
+
+        
+        @*<div class="col-sm-6 col-md-4 col-lg-3">
           <div class="box">
             <a href="">
               <div class="img-box">
@@ -308,7 +333,8 @@
               </div>
             </a>
           </div>
-        </div>
+        </div>*@
+
       </div>
       <div class="btn-box">
         <a href="">
@@ -674,23 +700,21 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
+          <form method="post" action="#">
             <div>
-              <input type="text" placeholder="Name" />
+              <input name="txtname" type="text" placeholder="Name" />
             </div>
             <div>
-              <input type="email" placeholder="Email" />
+              <input name="txtemail" type="email" placeholder="Email" />
             </div>
             <div>
-              <input type="text" placeholder="Phone" />
+              <input type="text" name="txtphone" placeholder="Phone" />
             </div>
             <div>
-              <input type="text" class="message-box" placeholder="Message" />
+              <input type="text" name="txtmsg" class="message-box" placeholder="Message" />
             </div>
             <div class="d-flex ">
-              <button>
-                SEND
-              </button>
+             <input style="background: #f89cab;" type="submit" value="SEND"/>
             </div>
           </form>
         </div>
