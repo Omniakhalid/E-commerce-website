@@ -43,25 +43,29 @@
 
                                    <li class="nav-item ">
                                        
-                                     <a class="nav-link text-dark float-right" asp-area="" asp-controller="" asp-action=""> <i class="fa fa-cart-flatbed"></i> Cart</a>
+                                     <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Cart" asp-action="Index"> <i class="fa fa-cart-flatbed"></i> Cart</a>
                                      
                                   </li>
-                                   <li class="nav-item ">
+                                  @* <li class="nav-item ">
                                      <a class="nav-link text-dark float-right" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                                  </li>
+                                  </li>*@
                             }
-                            else
+                           @* else
                             { 
                                  <li class="nav-item">
-                                     <a class="nav-link text-dark float-right" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                     <a class="nav-link text-dark float-right" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
                                   </li>
                                    <li class="nav-item ">
-                                     <a class="nav-link text-dark float-right" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                     <a class="nav-link text-dark float-right" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
                                   </li>
-                            }
+                            }*@
+                            
                     </ul>
+                   
+                    <partial name ="_LoginPartial.cshtml"/>
 
                 </div>
+                
             </div>
         </nav>
     </header>

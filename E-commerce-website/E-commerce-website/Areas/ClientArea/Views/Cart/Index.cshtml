@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<E_commerce_website.Models.CartItem>
-
+@using System;
 @{
-    ViewData["Title"] = "Index";
+
+    var Quantity = @Model.Where(c => c.UserID == 1).Select(c => c.Quantity).Sum();
+    Double? TotalPrice = 0D;
+    var TotalPricsCart = @Model.Where(c => c.UserID == 1).Select(c => c.Quantity * c.Product.ProductPrice).Sum();
 }
+
 <link rel="stylesheet" href="~/css/CartStyle.css"> 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -49,9 +53,9 @@
 }
     </tbody>
 </table>*@
-<div class="container">
+<body>
 
-@*<div class="card">
+<div class="card">
     <div class="row">
         <div class="col-md-8 cart">
             <div class="title">
@@ -59,54 +63,46 @@
                     <div class="col">
                         <h4><b>Shopping Cart</b></h4>
                     </div>
-                    <div class="col align-self-center text-right text-muted">3 items</div>
+                    <div class="col align-self-center text-right text-muted">@Quantity items</div>
                 </div>
             </div>
-            <div class="row border-top border-bottom">
+            @foreach (var item in Model)
+            {
+                TotalPrice = item.Product.ProductPrice * item.Quantity;
+              <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+                    <div class="col-2"><img class="img-fluid" src="~/images/@item.Product.ProductImage"></div>
                     <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
+                        <div class="row text-muted">@item.Product.ProductCategory.CategoryName</div>
+                        <div class="row">@item.Product.ProductName</div>
                     </div>
-                    <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                    <div class="col"> 
+                          <a asp-action="Decreament" asp-route-id=@item.ProductID>
+                               <i class="fa fa-minus-circle"></i>
+                           </a>
+                         
+                            <a href="#" class="border" style="border-radius:2px">@item.Quantity</a>
+                              <a asp-action="Increament" asp-route-id=@item.ProductID>
+                               <i class="fa fa-plus-circle"></i>
+                           </a>
+                     </div>
+                    <div class="col"> @TotalPrice EGP<span class="close">&#10005;</span></div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
-                    </div>
-                    <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                </div>
-            </div>
-            <div class="row border-top border-bottom">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
-                    </div>
-                    <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                </div>
-            </div>
+              </div>    
+             }
+         
             <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
         </div>
 
 
-        <div class="col-md-4 Summary">
+        <div class="col-md-4 summary">
             <div class="py-2">
                 <h4><b>Summary</b></h4>
             </div>
             <hr>
             <div class="row">
-                <div class="col" style="padding: left 3px;">ITEMS 3</div>
-                <div class="col text-right">&euro; 132.00</div>
+                <div class="col" style="padding: left 3px;">ITEMS @Quantity</div>
+                <div class="col text-right">@TotalPricsCart EGP</div>
             </div>
             <form>
                 <p>SHIPPING</p> <select>
@@ -116,11 +112,11 @@
             </form>
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">&euro; 137.00</div>
+                <div class="col text-right">@TotalPricsCart EGP</div>
             </div> <button class="btn">CHECKOUT</button>
         </div>
 
     </div>
-</div>*@
 </div>
+</body>
 
