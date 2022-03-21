@@ -26,7 +26,7 @@ namespace E_commerce_website
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("myConn")));
+            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         }
 

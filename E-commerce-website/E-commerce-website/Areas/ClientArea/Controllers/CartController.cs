@@ -29,7 +29,9 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
 
             return View(await onlineshoppingContext.ToListAsync());
         }
-       
+
+      
+
         public async Task<IActionResult> Increament(int id)
         {
             var cartItems = _context.CartItems.FirstOrDefault(c => c.UserID == 1 && c.ProductID == id);
