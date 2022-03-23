@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_website.Models
 {
+    [Index(nameof(OptionID), Name = "IX_ProductOptions_OptionID")]
+    [Index(nameof(ProductID), Name = "IX_ProductOptions_ProductID")]
     public partial class ProductOption
     {
-        [Key]
-        public int ProductOptionID { get; set; }
         public int OptionID { get; set; }
         public int ProductID { get; set; }
+        [Key]
+        public int id { get; set; }
 
         [ForeignKey(nameof(OptionID))]
         [InverseProperty("ProductOptions")]

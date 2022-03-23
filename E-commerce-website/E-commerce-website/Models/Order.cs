@@ -8,49 +8,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_website.Models
 {
+    [Index(nameof(UserID), Name = "IX_Orders_UserID")]
     public partial class Order
     {
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            OrderDate = DateTime.Now;
         }
 
         [Key]
         public int OrderID { get; set; }
         public int UserID { get; set; }
-        public int OrderAmount { get; set; }
+        [Column(TypeName = "money")]
+        public decimal OrderAmount { get; set; }
         [Required]
-        [StringLength(10)]
+        [StringLength(100)]
         public string ShippingAddress { get; set; }
-        [Required]
-        [StringLength(10)]
-        public string OrderAddress { get; set; }
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime OrderDate { get; set; }
-        public bool? OrderStatus { get; set; }
-        public int? orderTrakingNumber { get; set; }
-        public byte OrderShiped { get; set; }
+        public byte? OrderStatus { get; set; }
+        public int? OrderTrakingNumber { get; set; }
         [Required]
-        [StringLength(10)]
+        [StringLength(50)]
         public string OrderCountry { get; set; }
         [Required]
-        [StringLength(10)]
+        [StringLength(50)]
         public string OrderCity { get; set; }
         [Required]
         [StringLength(50)]
-        
-        public string CustomerPhone { get; set; }
-        [StringLength(50)]
-        
         public string OrderPhone { get; set; }
         [StringLength(50)]
-        
         public string OrderEmail { get; set; }
 
         [ForeignKey(nameof(UserID))]
         [InverseProperty("Orders")]
         public virtual User User { get; set; }
-        [InverseProperty(nameof(OrderDetail.DetailOrder))]
+        [InverseProperty(nameof(OrderDetail.Order))]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

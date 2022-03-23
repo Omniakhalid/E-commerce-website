@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_commerce_website.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_website.Data
 {
-    public class E_commerce_websiteContext : IdentityDbContext<IdentityUser>
+    public class E_commerce_websiteContext : IdentityDbContext<websiteUser>
     {
         public E_commerce_websiteContext(DbContextOptions<E_commerce_websiteContext> options)
             : base(options)

@@ -14,51 +14,37 @@ namespace E_commerce_website.Models
         {
             CartItems = new HashSet<CartItem>();
             Orders = new HashSet<Order>();
+            UserRegisterDate = DateTime.Now;
         }
 
         [Key]
         public int UserID { get; set; }
         [Required]
-        [StringLength(10)]
+        [StringLength(100)]
         public string UserEmail { get; set; }
         [Required]
         [StringLength(50)]
-        
         public string UserPassword { get; set; }
         [Required]
-        [StringLength(50)]
-        
-        public string UserFirstName { get; set; }
+        [StringLength(200)]
+        public string UserName { get; set; }
         [Required]
-        [StringLength(50)]
-        
-        public string UserLastName { get; set; }
-        [Required]
-        [StringLength(10)]
+        [StringLength(100)]
         public string UserCity { get; set; }
         public byte UserEmailVerfied { get; set; }
-        [Required]
-        public byte[] UserRegisterDate { get; set; }
-        [Required]
+        [Column(TypeName = "datetime")]
+        public DateTime UserRegisterDate { get; set; }
         [StringLength(50)]
-        
         public string UserVerficationCode { get; set; }
-        public int UserIP { get; set; }
         [Required]
         [StringLength(50)]
-        
         public string UserPhone { get; set; }
         [Required]
         [StringLength(50)]
-        
         public string UserCountry { get; set; }
         [Required]
         [StringLength(100)]
-        
         public string UserAddress { get; set; }
-        [StringLength(100)]
-        
-        public string UserAddress2 { get; set; }
 
         [InverseProperty(nameof(CartItem.User))]
         public virtual ICollection<CartItem> CartItems { get; set; }

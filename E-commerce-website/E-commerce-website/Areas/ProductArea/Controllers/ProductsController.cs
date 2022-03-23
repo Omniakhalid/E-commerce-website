@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_website.Models;
-using E_commerce_website.onlineDbContext;
+using E_commerce_website.Context;
 using Microsoft.AspNetCore.Hosting;
 using E_commerce_website.Areas.ProductArea.ViewModels;
 using System.IO;
@@ -43,6 +43,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             var product = await _context.Products
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Vendor)
+                .Include(p=>p.ProductOptions)
                 .FirstOrDefaultAsync(m => m.ProductID == id);
             if (product == null)
             {
@@ -83,7 +84,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 {
                     ProductID = productViewModel.ProductID,
                     ProductName = productViewModel.ProductName,
-                    ProductPrice=productViewModel.ProductPrice,
+                    ProductPrice= (decimal)productViewModel.ProductPrice,
                     ProductLongDes=productViewModel.ProductLongDes,
                     ProductShortDes=productViewModel.ProductShortDes,
                     ProductStock=productViewModel.ProductStock,

@@ -5,29 +5,46 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_website.Context;
 using E_commerce_website.Models;
-using E_commerce_website.onlineDbContext;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace E_commerce_website.Areas.ClientArea.Controllers
 {
     [Area("ClientArea")]
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly OnlineshoppingContext _context;
-
-        public OrdersController(OnlineshoppingContext context)
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly string _user;
+        public OrdersController(OnlineshoppingContext context, IHttpContextAccessor contextAccessor)
         {
             _context = context;
+            _contextAccessor = contextAccessor;
+            _user = _contextAccessor.HttpContext.User.Identity.Name;
         }
+
         public async Task<IActionResult> Checkout()
         {
+
             return View();
         }
-        // GET: ClientArea/Orders
         public async Task<IActionResult> Index()
         {
-            var onlineshoppingContext = _context.Orders.Include(o => o.User);
-            return View(await onlineshoppingContext.ToListAsync());
+            return View(GetOrders(_user)??new List<Order>());
+        }
+
+        // GET: ClientArea/Orders
+        public List<Order> GetOrders(string email)
+        {
+            var onlineshoppingContext = _context.Orders.Include(o => o.User)
+                                                       .Include(p => p.OrderDetails)
+                                                       .ThenInclude(p => p.Product)
+                                                       .Where(c => c.User.UserEmail == email);
+
+            return (onlineshoppingContext?.ToList());
         }
 
         // GET: ClientArea/Orders/Details/5
@@ -61,16 +78,47 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,UserID,OrderAmount,ShippingAddress,OrderAddress,OrderDate,OrderStatus,orderTrakingNumber,OrderShiped,OrderCountry,OrderCity,CustomerPhone,OrderPhone,OrderEmail")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderID,UserID,OrderAmount,ShippingAddress,OrderDate,OrderStatus,OrderTrakingNumber,OrderCountry,OrderCity,OrderPhone,OrderEmail")] Order order)
         {
-            if (ModelState.IsValid)
+            try
             {
+                var UserID = _context.Users.FirstOrDefault(c => c.UserEmail == _user).UserID;
+                order.UserID = UserID;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
+
+                _context.AddRange(OrderDetails(order.OrderID));
+                await _context.SaveChangesAsync();
+
+                var CartItems = _context.CartItems.Where(c => c.UserID == UserID);
+                _context.RemoveRange(CartItems);
+                _context.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "UserAddress", order.UserID);
-            return View(order);
+            catch
+            {
+                ViewData["UserID"] = new SelectList(_context.Users, "UserID", "UserAddress", order.UserID);
+                return View(order);
+
+            }
+        }
+        public List<OrderDetail> OrderDetails(int OrderID)
+        {
+            var Cart = _context.CartItems.Where(c => c.User.UserEmail == _user).Include(p => p.Product).ToList();
+            var Result = new List<OrderDetail>();
+            foreach (var item in Cart)
+            {
+                Result.Add(new OrderDetail()
+                {
+                    OrderID = OrderID,
+                    ProductID = item.ProductID,
+                    Quanity = item.Quantity,
+                    ProductName = item.Product?.ProductName,
+                    Price = item.Product.ProductPrice * item.Quantity
+                });
+            }
+            return Result;
         }
 
         // GET: ClientArea/Orders/Edit/5
@@ -95,7 +143,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderID,UserID,OrderAmount,ShippingAddress,OrderAddress,OrderDate,OrderStatus,orderTrakingNumber,OrderShiped,OrderCountry,OrderCity,CustomerPhone,OrderPhone,OrderEmail")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,UserID,OrderAmount,ShippingAddress,OrderDate,OrderStatus,OrderTrakingNumber,OrderCountry,OrderCity,OrderPhone,OrderEmail")] Order order)
         {
             if (id != order.OrderID)
             {
@@ -127,6 +175,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         }
 
         // GET: ClientArea/Orders/Delete/5
+        [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -146,7 +195,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         }
 
         // POST: ClientArea/Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
+     
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

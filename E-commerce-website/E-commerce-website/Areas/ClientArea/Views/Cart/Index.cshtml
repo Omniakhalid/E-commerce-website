@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<E_commerce_website.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 @using System;
 @{
 
-    var Quantity = @Model.Where(c => c.UserID == 1).Select(c => c.Quantity).Sum();
-    Double? TotalPrice = 0D;
-    var TotalPricsCart = @Model.Where(c => c.UserID == 1).Select(c => c.Quantity * c.Product.ProductPrice).Sum();
+    var Quantity = ViewBag.Quantity;
+    Decimal TotalPrice = 0M;
+    var TotalPricsCart = ViewBag.TotalPrice;
 }
 
 <link rel="stylesheet" href="~/css/CartStyle.css"> 
@@ -12,71 +18,70 @@
 
 <body>
 
-<div class="card">
-    <div class="row">
-        <div class="col-md-8 cart">
-            <div class="title">
-                <div class="row">
-                    <div class="col">
-                        <h4><b>Shopping Cart</b></h4>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Shopping Cart</b></h4>
+                        </div>
+                        <div class="col align-self-center text-right text-muted">@Quantity items</div>
                     </div>
-                    <div class="col align-self-center text-right text-muted">@Quantity items</div>
                 </div>
-            </div>
-            @foreach (var item in Model)
-            {
-                TotalPrice = item.Product.ProductPrice * item.Quantity;
-              <div class="row border-top border-bottom">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="~/images/@item.Product.ProductImage"></div>
-                    <div class="col">
-                        <div class="row text-muted">@item.Product.ProductCategory.CategoryName</div>
-                        <div class="row">@item.Product.ProductName</div>
-                    </div>
-                    <div class="col"> 
-                          <a asp-action="Decreament" asp-route-id=@item.ProductID>
-                               <i class="fa fa-minus-circle"></i>
-                           </a>
+                @foreach (var item in Model)
+                {
+                    TotalPrice = item.Product.ProductPrice * item.Quantity;
+                  <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="~/images/@item.Product.ProductImage"></div>
+                        <div class="col">
+                            <div class="row text-muted">@item.Product.ProductCategory.CategoryName</div>
+                            <div class="row">@item.Product.ProductName</div>
+                        </div>
+                        <div class="col"> 
+                              <a asp-action="Decreament" asp-route-id=@item.ProductID>
+                                   <i class="fa fa-minus-circle"></i>
+                               </a>
                          
-                            <a href="#" class="border" style="border-radius:2px">@item.Quantity</a>
-                              <a asp-action="Increament" asp-route-id=@item.ProductID>
-                               <i class="fa fa-plus-circle"></i>
-                           </a>
-                     </div>
-                    <div class="col"> @TotalPrice EGP<span class="close">&#10005;</span></div>
-                </div>
-              </div>    
-             }
+                                <a href="#" class="border" style="border-radius:2px">@item.Quantity</a>
+                                  <a asp-action="Increament" asp-route-id=@item.ProductID>
+                                   <i class="fa fa-plus-circle"></i>
+                               </a>
+                         </div>
+                        <div class="col"> @TotalPrice EGP<span class="close">&#10005;</span></div>
+                    </div>
+                  </div>    
+                 }
          
-            <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
 
-        </div>
-
-
-        <div class="col-md-4 summary">
-            <div class="py-2">
-                <h4><b>Summary</b></h4>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col" style="padding: left 3px;">ITEMS @Quantity</div>
-                <div class="col text-right">@TotalPricsCart EGP</div>
-            </div>
-            <form>
-                <p>SHIPPING</p> <select>
-                    <option class="text-muted">Standard-Delivery- &euro;5.00</option>
-                </select>
-                <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
-            </form>
-            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">@TotalPricsCart EGP</div>
-            </div> 
+
+
+            <div class="col-md-4 summary">
+                <div class="py-2">
+                    <h4><b>Summary</b></h4>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding: left 3px;">ITEMS @Quantity</div>
+                    <div class="col text-right">@TotalPricsCart EGP</div>
+                </div>
+                <form>
+                    <p>SHIPPING</p> <select>
+                        <option class="text-muted">Standard-Delivery- &euro;5.00</option>
+                    </select>
+                    <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+                </form>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">TOTAL PRICE</div>
+                    <div class="col text-right">@TotalPricsCart EGP</div>
+                </div> 
             
-                <a class="btn" asp-action= "Checkout" asp-controller = "Orders" asp-area="ClientArea" > CONTINUE TO CHECKOUT</a>
+                    <a class="btn" asp-action= "Checkout" asp-controller = "Orders" asp-area="ClientArea" > CONTINUE TO CHECKOUT</a>
+            </div>
+
         </div>
-
     </div>
-</div>
 </body>
-

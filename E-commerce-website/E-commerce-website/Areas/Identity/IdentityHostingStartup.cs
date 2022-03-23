@@ -1,5 +1,7 @@
 ﻿using System;
+using E_commerce_website.Areas.Identity.Data;
 using E_commerce_website.Data;
+using E_commerce_website.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -19,8 +21,16 @@ namespace E_commerce_website.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("E_commerce_websiteContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<websiteUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<E_commerce_websiteContext>();
+                //services.AddIdentity<User, IdentityRole>(opt =>
+                //{
+                //    opt.Password.RequiredLength = 7;
+                //    opt.Password.RequireDigit = false;
+                //    opt.Password.RequireUppercase = false;
+                //    opt.User.RequireUniqueEmail = true;
+                //    opt.SignIn.RequireConfirmedEmail = true;
+                //});
             });
         }
     }

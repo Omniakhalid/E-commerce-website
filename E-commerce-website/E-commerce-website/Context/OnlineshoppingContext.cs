@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using E_commerce_website.Models;
 
-namespace E_commerce_website.onlineDbContext
+namespace E_commerce_website.Context
 {
     public partial class OnlineshoppingContext : DbContext
     {
@@ -30,20 +30,14 @@ namespace E_commerce_website.onlineDbContext
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=OnlineShopping;Integrated Security=True");
-            }
-        }
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>(entity =>
             {
-                entity.HasKey(e => new { e.id, e.UserID, e.ProductID });
+                entity.HasKey(e => new { e.UserID, e.ProductID })
+                    .HasName("PK_CartItems_1");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.CartItems)
@@ -69,17 +63,8 @@ namespace E_commerce_website.onlineDbContext
                     .HasConstraintName("FK_Options_OptionGroups");
             });
 
-            modelBuilder.Entity<OptionGroup>(entity =>
-            {
-                entity.Property(e => e.OptionGroupID).ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.OrderID).ValueGeneratedNever();
-
-                entity.Property(e => e.OrderAddress).IsFixedLength();
-
                 entity.Property(e => e.OrderCity).IsFixedLength();
 
                 entity.Property(e => e.OrderCountry).IsFixedLength();
@@ -95,32 +80,23 @@ namespace E_commerce_website.onlineDbContext
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasKey(e => e.DetailID)
-                    .HasName("PK_OrderDetails_1");
+                entity.HasKey(e => new { e.OrderID, e.ProductID });
 
-                entity.Property(e => e.DetailID).ValueGeneratedNever();
-
-                entity.HasOne(d => d.DetailOrder)
+                entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.DetailOrderID)
+                    .HasForeignKey(d => d.OrderID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetails_Orders");
 
-                entity.HasOne(d => d.DetailProduct)
+                entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.DetailProductID)
+                    .HasForeignKey(d => d.ProductID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetails_Products");
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Property(e => e.ProductID).ValueGeneratedNever();
-
-                entity.Property(e => e.ProductUpdateDate)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
                 entity.HasOne(d => d.ProductCategory)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.ProductCategoryID)
@@ -130,6 +106,7 @@ namespace E_commerce_website.onlineDbContext
                 entity.HasOne(d => d.Vendor)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.VendorID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Products_Vendor");
             });
 
@@ -140,8 +117,6 @@ namespace E_commerce_website.onlineDbContext
 
             modelBuilder.Entity<ProductOption>(entity =>
             {
-                entity.Property(e => e.ProductOptionID).ValueGeneratedNever();
-
                 entity.HasOne(d => d.Option)
                     .WithMany(p => p.ProductOptions)
                     .HasForeignKey(d => d.OptionID)
@@ -157,22 +132,20 @@ namespace E_commerce_website.onlineDbContext
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserID).ValueGeneratedNever();
-
                 entity.Property(e => e.UserCity).IsFixedLength();
 
                 entity.Property(e => e.UserEmail).IsFixedLength();
-
-                entity.Property(e => e.UserRegisterDate)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
             });
 
             modelBuilder.Entity<Vendor>(entity =>
             {
-                entity.Property(e => e.VendorID).ValueGeneratedNever();
+                entity.Property(e => e.VendorCountry).IsFixedLength();
 
-                entity.Property(e => e.Email).IsFixedLength();
+                entity.Property(e => e.VendorEmail).IsFixedLength();
+
+                entity.Property(e => e.VendorPassword).IsFixedLength();
+
+                entity.Property(e => e.VendorVerficationCode).IsFixedLength();
             });
 
             OnModelCreatingPartial(modelBuilder);

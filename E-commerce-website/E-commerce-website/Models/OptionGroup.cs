@@ -17,8 +17,7 @@ namespace E_commerce_website.Models
 
         [Key]
         public int OptionGroupID { get; set; }
-        [StringLength(50)]
-        
+        [StringLength(100)]
         public string OptionGroupName { get; set; }
 
         [InverseProperty(nameof(Option.OptionGroup))]

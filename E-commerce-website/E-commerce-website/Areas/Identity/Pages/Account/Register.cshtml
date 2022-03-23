@@ -1,7 +1,9 @@
 ﻿@page
+@using static E_commerce_website.Areas.Identity.Pages.Account.RegisterModel
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -12,7 +14,14 @@
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
+
             <div class="form-group">
+                <label asp-for="Input.UserFirstName"></label>
+                <input asp-for="Input.UserFirstName" class="form-control" />
+                <span asp-validation-for="Input.UserFirstName" class="text-danger"></span>
+            </div>
+
+             <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -27,6 +36,27 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Input.UserCity"></label>
+                <input asp-for="Input.UserCity" class="form-control" />
+                <span asp-validation-for="Input.UserCity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.UserPhone"></label>
+                <input asp-for="Input.UserPhone" class="form-control" />
+                <span asp-validation-for="Input.UserPhone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.UserAddress"></label>
+                <input asp-for="Input.UserAddress" class="form-control" />
+                <span asp-validation-for="Input.UserAddress" class="text-danger"></span>
+            </div>
+           <select asp-for="Input.type" asp-items="Html.GetEnumSelectList<UserType>()" class ="form-control mb-5" >
+               
+           </select>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>

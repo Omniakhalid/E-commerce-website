@@ -6,7 +6,7 @@
    "FilterSchemas": false,
    "IncludeConnectionString": true,
    "ModelNamespace": null,
-   "OutputContextPath": "onlineDbContext",
+   "OutputContextPath": "Context",
    "OutputPath": "Models",
    "ProjectRootNamespace": "E_commerce_website",
    "Schemas": null,

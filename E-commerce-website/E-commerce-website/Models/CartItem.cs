@@ -8,15 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_website.Models
 {
+    [Index(nameof(ProductID), Name = "IX_CartItems_ProductID")]
+    [Index(nameof(UserID), Name = "IX_CartItems_UserID")]
     public partial class CartItem
     {
-        [Key]
-        public int id { get; set; }
         [Key]
         public int UserID { get; set; }
         [Key]
         public int ProductID { get; set; }
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
+        public double TotalPrice { get; set; }
 
         [ForeignKey(nameof(ProductID))]
         [InverseProperty("CartItems")]

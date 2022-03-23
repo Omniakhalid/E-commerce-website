@@ -1,17 +1,28 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity;
+@using  E_commerce_website.Areas.Identity.Data;
+@inject SignInManager<websiteUser> SignInManager
+@inject UserManager<websiteUser> UserManager
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav mr-auto">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+     var currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
+        <li class="nav-item ">
+            <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Orders"  asp-action="Index">Orders</a>
+        </li>
+
+        <li class="nav-item ">
+                                       
+            <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Cart" asp-action="Index"> <i class="fa fa-cart-flatbed"></i> Cart</a>
+        </li>
+     <li class="nav-item">
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> @currentUser.UserFirstName </a>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button id="logout" type="submit" class="nav-link "><i class="fa fa-sign-out"></i>Logout</button>
+           
         </form>
     </li>
 }

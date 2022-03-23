@@ -26,6 +26,11 @@ namespace E_commerce_website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserFirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserCity = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    UserPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    type = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

@@ -16,15 +16,15 @@
            
               <div class="row">
                
-                <form style="display:contents">
+                <form style="display:contents" asp-action="create" asp-controller="Orders">
                    
                         <div class="input-group row  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Name"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Email"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Phone Number"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Street address"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" placeholder="City"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Country"> </div>
-                  
+                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderEmail"  placeholder="Email"> </div>
+                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderPhone" placeholder="Phone Number"> </div>
+                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="ShippingAddress" placeholder="Street address"> </div>
+                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderCity" placeholder="City"> </div>
+                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderCountry"  placeholder="Country"> </div>
+                        <button type="submit" value="Submit"/>
                 </form>
                    
               </div>    
@@ -62,7 +62,7 @@
                        </div>
                     </div> 
                     
-
+                    <a asp-action="PaymentwithPaypal" asp-controller="Payment" asp-area=""> Check EL 5ra</a>
             </form>
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>

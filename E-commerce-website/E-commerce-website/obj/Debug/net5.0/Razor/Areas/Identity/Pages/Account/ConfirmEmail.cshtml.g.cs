@@ -34,6 +34,13 @@ using E_commerce_website.Areas.Identity.Pages;
 #line hidden
 #nullable disable
 #nullable restore
+#line 5 "D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\Areas\Identity\Pages\_ViewImports.cshtml"
+using E_commerce_website.Areas.Identity.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\Areas\Identity\Pages\Account\_ViewImports.cshtml"
 using E_commerce_website.Areas.Identity.Pages.Account;
 
@@ -41,7 +48,7 @@ using E_commerce_website.Areas.Identity.Pages.Account;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"69fd2432bd09e377aec34c04642364485eee4a7d", @"/Areas/Identity/Pages/Account/ConfirmEmail.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"db5981ff1945a8b2d2abe2174a4783345f61b0ef", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6f01da66a501d8dcb178dc6c20f0082badbee74c", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"21ce6a3ff433efc9eb9f03ed6558919555ae80f2", @"/Areas/Identity/Pages/Account/_ViewImports.cshtml")]
     public class Areas_Identity_Pages_Account_ConfirmEmail : global::Microsoft.AspNetCore.Mvc.RazorPages.Page
     {

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_website.Models
 {
+    [Index(nameof(OptionGroupID), Name = "IX_Options_OptionGroupID")]
     public partial class Option
     {
         public Option()
@@ -19,7 +20,6 @@ namespace E_commerce_website.Models
         public int OptionID { get; set; }
         [Required]
         [StringLength(50)]
-        
         public string OptionName { get; set; }
         public int OptionGroupID { get; set; }
 

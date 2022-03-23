@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
@@ -23,12 +24,6 @@
             @Html.DisplayFor(model => model.ShippingAddress)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderAddress)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OrderAddress)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OrderDate)
         </dt>
         <dd class = "col-sm-10">
@@ -41,16 +36,10 @@
             @Html.DisplayFor(model => model.OrderStatus)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.orderTrakingNumber)
+            @Html.DisplayNameFor(model => model.OrderTrakingNumber)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.orderTrakingNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderShiped)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OrderShiped)
+            @Html.DisplayFor(model => model.OrderTrakingNumber)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OrderCountry)
@@ -63,12 +52,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.OrderCity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerPhone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerPhone)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OrderPhone)

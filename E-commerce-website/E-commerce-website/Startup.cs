@@ -1,4 +1,5 @@
-using E_commerce_website.onlineDbContext;
+using E_commerce_website.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Stripe;
+using E_commerce_website.Controllers;
 
 namespace E_commerce_website
 {
@@ -26,13 +30,16 @@ namespace E_commerce_website
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddHttpContextAccessor();
+            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseAuthentication();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -47,9 +54,8 @@ namespace E_commerce_website
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
-          
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

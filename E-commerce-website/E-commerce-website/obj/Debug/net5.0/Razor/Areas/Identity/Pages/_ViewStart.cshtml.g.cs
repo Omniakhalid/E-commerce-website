@@ -33,8 +33,15 @@ using E_commerce_website.Areas.Identity.Pages;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\Areas\Identity\Pages\_ViewImports.cshtml"
+using E_commerce_website.Areas.Identity.Data;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"43e0bf0d61f9a553d2f59156ad2cdff9b3bdd158", @"/Areas/Identity/Pages/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"db5981ff1945a8b2d2abe2174a4783345f61b0ef", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6f01da66a501d8dcb178dc6c20f0082badbee74c", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
     public class Areas_Identity_Pages__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

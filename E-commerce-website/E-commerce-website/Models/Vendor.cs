@@ -14,26 +14,36 @@ namespace E_commerce_website.Models
         public Vendor()
         {
             Products = new HashSet<Product>();
+            VendorRegisterDate = DateTime.Now;
         }
 
         [Key]
         public int VendorID { get; set; }
         [Required]
-        [StringLength(50)]
-        
+        [StringLength(100)]
         public string VendorName { get; set; }
         [Required]
-        [StringLength(50)]
-        
-        public string Address { get; set; }
-        public int Phone { get; set; }
+        [StringLength(200)]
+        public string VendorAddress { get; set; }
         [Required]
         [StringLength(50)]
-        
-        public string City { get; set; }
+        public string VendorPhone { get; set; }
         [Required]
-        [StringLength(10)]
-        public string Email { get; set; }
+        [StringLength(50)]
+        public string VendorCity { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string VendorEmail { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string VendorPassword { get; set; }
+        [StringLength(100)]
+        public string VendorVerficationCode { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string VendorCountry { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime VendorRegisterDate { get; set; }
 
         [InverseProperty(nameof(Product.Vendor))]
         public virtual ICollection<Product> Products { get; set; }

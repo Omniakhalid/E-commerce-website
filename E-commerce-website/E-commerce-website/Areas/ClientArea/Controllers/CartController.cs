@@ -5,49 +5,59 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_website.Context;
 using E_commerce_website.Models;
-using E_commerce_website.onlineDbContext;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_website.Areas.ClientArea.Controllers
 {
+    [Authorize]
     [Area("ClientArea")]
+
     public class CartController : Controller
     {
         private readonly OnlineshoppingContext _context;
 
-        public CartController(OnlineshoppingContext context)
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly string _user;
+        public CartController(OnlineshoppingContext context, IHttpContextAccessor contextAccessor)
         {
             _context = context;
+            _contextAccessor = contextAccessor;
+            _user = _contextAccessor.HttpContext.User.Identity.Name;
         }
 
         // GET: ClientArea/Cart
         public async Task<IActionResult> Index()
         {
-            var onlineshoppingContext = _context.CartItems.Where(c=>c.UserID == 1)
-                                                          .Include(c => c.Product).Include(c => c.User)
-                                                          .Include(c=>c.Product.ProductCategory);
+            var CartItems = _context.CartItems.Where(c => c.User.UserEmail == _user)
+                                                      .Include(c => c.Product).Include(c => c.User)
+                                                      .Include(c => c.Product.ProductCategory);
+            ViewBag.Quantity = CartItems.Select(c=>c.Quantity).Sum();
 
-            return View(await onlineshoppingContext.ToListAsync());
+            ViewBag.TotalPrice = CartItems.Select(c => c.Quantity * c.Product.ProductPrice).Sum();
+
+            return View(await CartItems.ToListAsync());
         }
-
-      
 
         public async Task<IActionResult> Increament(int id)
         {
-            var cartItems = _context.CartItems.FirstOrDefault(c => c.UserID == 1 && c.ProductID == id);
+            var cartItems = _context.CartItems.FirstOrDefault(c => c.User.UserEmail == _user && c.ProductID == id);
             cartItems.Quantity++;
-           _context.SaveChanges();
+
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Decreament(int id)
         {
-            var cartItems = _context.CartItems.FirstOrDefault(c => c.UserID == 1 && c.ProductID == id);
+            var cartItems = _context.CartItems.FirstOrDefault(c => c.User.UserEmail == _user && c.ProductID == id);
             cartItems.Quantity--;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-      
+
         // GET: ClientArea/Cart/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,7 +69,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
             var cartItem = await _context.CartItems
                 .Include(c => c.Product)
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.UserID == id);
             if (cartItem == null)
             {
                 return NotFound();
@@ -81,7 +91,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,UserID,ProductID,Quantity")] CartItem cartItem)
+        public async Task<IActionResult> Create([Bind("UserID,ProductID,Quantity,TotalPrice")] CartItem cartItem)
         {
             if (ModelState.IsValid)
             {
@@ -117,9 +127,9 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,UserID,ProductID,Quantity")] CartItem cartItem)
+        public async Task<IActionResult> Edit(int id, [Bind("UserID,ProductID,Quantity,TotalPrice")] CartItem cartItem)
         {
-            if (id != cartItem.id)
+            if (id != cartItem.UserID)
             {
                 return NotFound();
             }
@@ -133,7 +143,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CartItemExists(cartItem.id))
+                    if (!CartItemExists(cartItem.UserID))
                     {
                         return NotFound();
                     }
@@ -160,7 +170,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
             var cartItem = await _context.CartItems
                 .Include(c => c.Product)
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.UserID == id);
             if (cartItem == null)
             {
                 return NotFound();
@@ -182,7 +192,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
 
         private bool CartItemExists(int id)
         {
-            return _context.CartItems.Any(e => e.id == id);
+            return _context.CartItems.Any(e => e.UserID == id);
         }
     }
 }

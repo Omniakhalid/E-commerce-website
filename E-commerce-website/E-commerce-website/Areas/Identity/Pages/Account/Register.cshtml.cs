@@ -7,34 +7,40 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using E_commerce_website.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using E_commerce_website.Context;
+using E_commerce_website.Models;
 
 namespace E_commerce_website.Areas.Identity.Pages.Account
 {
+    
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<websiteUser> _signInManager;
+        private readonly UserManager<websiteUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly OnlineshoppingContext _context;
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<websiteUser> userManager,
+            SignInManager<websiteUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
-            _emailSender = emailSender;
-        }
+            IEmailSender emailSender, OnlineshoppingContext context)
+            {
+                _userManager = userManager;
+                _signInManager = signInManager;
+                _logger = logger;
+                _emailSender = emailSender;
+                _context = context;
+
+            }
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -43,6 +49,7 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        
         public class InputModel
         {
             [Required]
@@ -60,6 +67,25 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            [Display(Name = "Name")]
+            public string UserFirstName { get; set; }
+
+            [Required]
+            [StringLength(10)]
+            [Display(Name = "City")]
+            public string UserCity { get; set; }
+            [Display(Name = "Phone")]
+            public string UserPhone { get; set; }
+
+            [Required]
+            [StringLength(100)]
+            [Display(Name = "Address")]
+            public string UserAddress { get; set; }
+
+            public UserType type { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -74,7 +100,15 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new websiteUser { UserName = Input.Email, Email = Input.Email };
+
+                user.UserFirstName = Input.UserFirstName;
+                user.UserCity = Input.UserCity;
+                user.UserPhone = Input.UserPhone;
+                user.UserAddress=Input.UserAddress;
+                user.type = Input.type;
+                
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -93,6 +127,35 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        if (Input.type==UserType.Vendor)
+                        {
+                            _context.Add(new Vendor()
+                            {
+                                VendorName = Input.UserFirstName,
+                                VendorAddress = Input.UserAddress,
+                                VendorEmail = Input.Email,
+                                VendorPhone = Input.UserPhone,
+                                VendorCity = Input.UserCity,
+                                VendorPassword = Input.Password
+                            }) ;
+                            _context.SaveChanges();
+                        }
+                        else if (Input.type == UserType.User)
+                        {
+                            var User = new User()
+                            {
+                                UserName = Input.UserFirstName,
+                                UserEmail = Input.Email,
+                                UserPhone = Input.UserPhone,
+                                UserAddress = Input.UserAddress,
+                                UserCity = Input.UserCity,
+                                UserCountry = "EGYPT",
+                                UserPassword = Input.Password
+                            };
+                            _context.Users.Add(User);
+                            _context.SaveChanges();
+
+                        }
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else

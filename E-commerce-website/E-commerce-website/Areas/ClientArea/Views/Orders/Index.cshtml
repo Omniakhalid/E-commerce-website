@@ -1,107 +1,40 @@
 ﻿@model IEnumerable<E_commerce_website.Models.Order>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<link rel="stylesheet" href="~/css/CartStyle.css"> 
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShippingAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.orderTrakingNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderShiped)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderCountry)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderCity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShippingAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.orderTrakingNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderShiped)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderCountry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserAddress)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<body style="background-color:white">
+     
+        <div class="container">
+        <div class="heading_container heading_center">
+        <h2>
+            Order History
+        </h2>
+        </div>
+      
+
+    @foreach(var item in Model){
+        <div class="card mt-3">
+            <div class="card-header">
+            Order at Day @item.OrderDate
+            </div>
+            <div class="card-body">
+                    <blockquote class="blockquote mb-3">
+                        @foreach(var order in item.OrderDetails)
+                            {
+                                <p> Product @order.ProductName -> @order.Quanity </p>
+                                <div style="float:right">
+                                    <img src="~/dbImages/@order.Product.ProductImage"/>
+                                </div>
+                            }
+                        <p>Total Price @item.OrderAmount</p>
+                    </blockquote>
+            </div>
+        </div>
+    }
+          
+    </div>   
+      
+</body>
+
+

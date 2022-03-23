@@ -8,24 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_website.Models
 {
+    [Index(nameof(OrderID), Name = "IX_OrderDetails_DetailOrderID")]
+    [Index(nameof(ProductID), Name = "IX_OrderDetails_DetailProductID")]
     public partial class OrderDetail
     {
         [Key]
-        public int DetailID { get; set; }
-        public int DetailOrderID { get; set; }
-        public int DetailProductID { get; set; }
+        public int OrderID { get; set; }
+        [Key]
+        public int ProductID { get; set; }
         [Required]
-        [StringLength(50)]
-        
-        public string DetailName { get; set; }
+        [StringLength(200)]
+        public string ProductName { get; set; }
         public int Quanity { get; set; }
-        public double Price { get; set; }
+        [Column(TypeName = "money")]
+        public decimal Price { get; set; }
 
-        [ForeignKey(nameof(DetailOrderID))]
-        [InverseProperty(nameof(Order.OrderDetails))]
-        public virtual Order DetailOrder { get; set; }
-        [ForeignKey(nameof(DetailProductID))]
-        [InverseProperty(nameof(Product.OrderDetails))]
-        public virtual Product DetailProduct { get; set; }
+        [ForeignKey(nameof(OrderID))]
+        [InverseProperty("OrderDetails")]
+        public virtual Order Order { get; set; }
+        [ForeignKey(nameof(ProductID))]
+        [InverseProperty("OrderDetails")]
+        public virtual Product Product { get; set; }
     }
 }
