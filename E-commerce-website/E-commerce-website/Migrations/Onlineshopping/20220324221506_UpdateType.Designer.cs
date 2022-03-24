@@ -4,14 +4,16 @@ using E_commerce_website.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_commerce_website.Migrations.Onlineshopping
 {
     [DbContext(typeof(OnlineshoppingContext))]
-    partial class OnlineshoppingContextModelSnapshot : ModelSnapshot
+    [Migration("20220324221506_UpdateType")]
+    partial class UpdateType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

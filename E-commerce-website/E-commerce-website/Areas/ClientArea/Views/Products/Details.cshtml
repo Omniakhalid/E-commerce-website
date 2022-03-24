@@ -1,0 +1,92 @@
+﻿@using E_commerce_website.Models;
+@model E_commerce_website.Models.Product
+@{
+    ViewData["Title"] = "Details";
+    var Options = ViewBag.ProductOptions;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+
+         <div class="single-product">
+            <div class="row" id="">
+                <div class="col-md-6 single-top-left">  
+                    <div class="flexslider">
+                       <img src="~/dbImages/@Model.ProductImage"/>
+
+                    </div>
+                </div>
+                <div class="col-md-6 single-top-right">
+                    <h3 class="item_name">@Html.DisplayFor(model => model.ProductName)</h3>
+                    <p>Category : @Html.DisplayFor(model => model.ProductCategory.CategoryName)</p>
+                 
+                @foreach(var group in Options)
+                {
+                    <p> @(group.Key) </p>
+                    <select name="options" id="options">
+                    @foreach (var element in group)
+                    {
+                        <option value= "@(element.OptionID)">@(element.Option.OptionName)</option>  
+                    }
+                    </select>
+                    <br/>
+                }
+
+                
+
+
+
+                    
+                    <div class="single-rating">
+                    @*                       
+                        <ul>
+                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                <li class="rating">20 reviews</li>
+                                <li><a href="#">Add your review</a></li>
+                        </ul>
+                    *@
+                    </div>
+                    <div class="single-price">
+                        <ul>
+                            <li class="product-price">@Html.DisplayFor(model => model.ProductPrice)EGP</li>  
+                            <li>@Html.DisplayFor(model => model.ProductShortDes)</li><br/>
+                            <li>Items in Stock : @Html.DisplayFor(model => model.ProductStock)</li> <br />
+                            <li><span class="off">Seller Name : @Html.DisplayFor(model => model.Vendor.VendorName)</span></li> 
+                            <li><a href="#"><i class="fa fa-gift" aria-hidden="true"></i> Coupon</a></li>
+                        </ul>   
+                    </div> 
+
+                   <p class="single-price-text"> Text Here if You want </p>
+                  @*  <form action="#" method="post">
+                        @<input type="hidden" name="cmd" value="_cart" />
+                        @*<input type="hidden" name="add" value="1" /> 
+                        @*<input type="hidden" name="w3ls_item" value="Snow Blower" /> 
+                        @*<input type="hidden" name="amount" value="@Html.DisplayFor(model => model.ProductImage)" /> 
+                        <button type="submit" class="btn btn-red" ><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                        <button class="btn btn-primary"><i class="fa fa-heart-o" aria-hidden="true"></i> Add to Wishlist</button>
+                    </form>*@
+                    
+                </div>
+                <div class="single-product-everything">
+                            <a asp-area="" asp-controller="Home" asp-action="index" >Back to Home</a>
+                <h4>Product Description</h4>
+                <div class="alert alert-secondary" role="alert" style="width:100%">
+                    @Html.DisplayFor(model => model.ProductLongDes)
+                    </div>
+
+                <div style="bottom:10px">
+    
+
+            
+
+    
+
+ 
+    

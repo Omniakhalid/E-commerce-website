@@ -126,7 +126,10 @@
             <a href="">
                 
                       <div class="img-box">
-                <img src= @item.ProductImage alt="">
+                          <a asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID>
+
+                                <img src= "~/dbImages/@item.ProductImage" alt="">
+                          </a>
               </div>
               <div class="detail-box">
                 <h6>
@@ -143,6 +146,7 @@
                 <span>
                   New
                 </span>
+                <a  asp-area="ClientArea" asp-controller="Cart" asp-action="AddItemsIntoCart"  asp-route-id=@item.ProductID> <i class="fa fa-cart-plus"></i></a>
               </div>
               </a>
           </div>

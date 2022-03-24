@@ -17,7 +17,7 @@ namespace E_commerce_website.Models
         [Key]
         public int ProductID { get; set; }
         public int Quantity { get; set; }
-        public double TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
         [ForeignKey(nameof(ProductID))]
         [InverseProperty("CartItems")]

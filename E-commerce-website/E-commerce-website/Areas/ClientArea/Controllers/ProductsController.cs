@@ -5,34 +5,35 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using E_commerce_website.Models;
 using E_commerce_website.Context;
-using Microsoft.AspNetCore.Hosting;
-using E_commerce_website.Areas.ProductArea.ViewModels;
-using System.IO;
+using E_commerce_website.Models;
+using System.Diagnostics;
 
-namespace E_commerce_website.Areas.ProductArea.Controllers
+namespace E_commerce_website.Areas.ClientArea.Controllers
 {
-    [Area("ProductArea")]
+    [Area("ClientArea")]
     public class ProductsController : Controller
     {
         private readonly OnlineshoppingContext _context;
-        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductsController(OnlineshoppingContext context, IWebHostEnvironment hostEnvironment)
+        public ProductsController(OnlineshoppingContext context)
         {
             _context = context;
-            webHostEnvironment = hostEnvironment;
         }
 
-        // GET: ProductArea/Products
+        // GET: ClientArea/Products
         public async Task<IActionResult> Index()
         {
-            var onlineshoppingContext = _context.Products.Include(p => p.ProductCategory).Include(p => p.Vendor);
+            var onlineshoppingContext = _context.Products
+                                                .Include(p => p.ProductCategory)
+                                                .Include(p => p.Vendor)
+                                                ;
+
+
             return View(await onlineshoppingContext.ToListAsync());
         }
 
-        // GET: ProductArea/Products/Details/5
+        // GET: ClientArea/Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,71 +41,63 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .Include(p => p.ProductCategory)
-                .Include(p => p.Vendor)
-                .Include(p=>p)
-                .FirstOrDefaultAsync(m => m.ProductID == id);
-            if (product == null)
+            var product = _context.Products
+                                .Include(p => p.ProductCategory)
+                                .Include(p => p.Vendor)
+                                .FirstOrDefault(p => p.ProductID == id);
+
+
+
+            var ProductOptions = _context.ProductOptions
+                                            .Include(p=>p.Option)
+                                            .ThenInclude(p=>p.OptionGroup)
+                                            .Where(p => p.ProductID == id).ToList()
+                                            .GroupBy(p => p.Option.OptionGroup.OptionGroupName);
+
+            
+            foreach(var group in ProductOptions)
             {
-                return NotFound();
+                Debug.WriteLine(group.Select(c=>c.Option.OptionGroup.OptionGroupName));
+
+                foreach (var element in group)
+                {
+                    
+                    Debug.WriteLine($"{element.Option.OptionName}{element.Option.OptionID}");
+                }
             }
+
+            ViewBag.ProductOptions = ProductOptions;
 
             return View(product);
         }
 
-        // GET: ProductArea/Products/Create
+        // GET: ClientArea/Products/Create
         public IActionResult Create()
         {
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName");
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName");
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorAddress");
             return View();
         }
 
-        // POST: ProductArea/Products/Create
+        // POST: ClientArea/Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,ProductName,ProductPrice,ProductWeight,ProductShortDes,ProductLongDes,ProductImage,ProductCategoryID,ProductUpdateDate,ProductStock,VendorID")] Product product,ProductViewModel productViewModel)
+        public async Task<IActionResult> Create([Bind("ProductID,ProductName,ProductPrice,ProductWeight,ProductShortDes,ProductLongDes,ProductImage,ProductCategoryID,ProductUpdateDate,ProductStock,VendorID")] Product product)
         {
-            //if (ModelState.IsValid)
-            if(productViewModel.ProductName!=null)
+            if (ModelState.IsValid)
             {
-                string wwwRootPath = webHostEnvironment.WebRootPath;//GUID
-                string fileName = Path.GetFileNameWithoutExtension(productViewModel.ProductImageFile.FileName);
-                string extension = Path.GetExtension(productViewModel.ProductImageFile.FileName);
-                productViewModel.ProductImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                string path = Path.Combine(wwwRootPath + "/dbImages/", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await productViewModel.ProductImageFile.CopyToAsync(fileStream);
-                }
-                Product prod = new Product
-                {
-                    ProductID = productViewModel.ProductID,
-                    ProductName = productViewModel.ProductName,
-                    ProductPrice= (decimal)productViewModel.ProductPrice,
-                    ProductLongDes=productViewModel.ProductLongDes,
-                    ProductShortDes=productViewModel.ProductShortDes,
-                    ProductStock=productViewModel.ProductStock,
-                    ProductWeight=productViewModel.ProductWeight,
-                    ProductImage=productViewModel.ProductImage,
-                    ProductUpdateDate=productViewModel.ProductUpdateDate,
-                    VendorID=productViewModel.VendorID,
-                    ProductCategoryID = productViewModel.ProductCategoryID
-
-                };
-                _context.Add(prod);
+                _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", productViewModel.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", productViewModel.VendorID);
-            return View();
+            ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorAddress", product.VendorID);
+            return View(product);
         }
 
-        // GET: ProductArea/Products/Edit/5
+        // GET: ClientArea/Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,11 +111,11 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 return NotFound();
             }
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorAddress", product.VendorID);
             return View(product);
         }
 
-        // POST: ProductArea/Products/Edit/5
+        // POST: ClientArea/Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -155,11 +148,11 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorAddress", product.VendorID);
             return View(product);
         }
 
-        // GET: ProductArea/Products/Delete/5
+        // GET: ClientArea/Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -179,7 +172,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             return View(product);
         }
 
-        // POST: ProductArea/Products/Delete/5
+        // POST: ClientArea/Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

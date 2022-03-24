@@ -93,15 +93,35 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserID,ProductID,Quantity,TotalPrice")] CartItem cartItem)
         {
-            if (ModelState.IsValid)
+            if(cartItem != null)
             {
                 _context.Add(cartItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductImage", cartItem.ProductID);
             ViewData["UserID"] = new SelectList(_context.Users, "UserID", "UserAddress", cartItem.UserID);
             return View(cartItem);
+        }
+
+
+        public async Task<IActionResult> AddItemsIntoCart(int id)
+        {
+            var UserID = _context.Users.FirstOrDefault(c => c.UserEmail == _user)?.UserID;
+            if(UserID != null)
+            {
+                var TotalPrice = _context.Products.FirstOrDefault(c=>c.ProductID == id).ProductPrice;
+                CartItem cartItem = new CartItem() {
+                    UserID = (int)UserID,
+                    TotalPrice = TotalPrice,
+                    ProductID = id,
+                    Quantity = 1
+                };
+                _context.Add(cartItem);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: ClientArea/Cart/Edit/5
