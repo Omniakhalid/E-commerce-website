@@ -50,7 +50,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             var product = await _context.Products
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Vendor)
-                .Include(p=>p)
+               
                 .FirstOrDefaultAsync(m => m.ProductID == id);
             if (product == null)
             {
