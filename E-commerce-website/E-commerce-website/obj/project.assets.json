@@ -8036,19 +8036,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Heba\\.nuget\\packages\\": {}
+    "C:\\Users\\acs\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Heba\\Documents\\GitHub\\E-commerce-website\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
+      "projectUniqueName": "E:\\ITI_SEC\\Github\\last version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
       "projectName": "E-commerce-website",
-      "projectPath": "C:\\Users\\Heba\\Documents\\GitHub\\E-commerce-website\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
-      "packagesPath": "C:\\Users\\Heba\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Heba\\Documents\\GitHub\\E-commerce-website\\E-commerce-website\\E-commerce-website\\obj\\",
+      "projectPath": "E:\\ITI_SEC\\Github\\last version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
+      "packagesPath": "C:\\Users\\acs\\.nuget\\packages\\",
+      "outputPath": "E:\\ITI_SEC\\Github\\last version\\E-commerce-website\\E-commerce-website\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Heba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\acs\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8125,7 +8125,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }
