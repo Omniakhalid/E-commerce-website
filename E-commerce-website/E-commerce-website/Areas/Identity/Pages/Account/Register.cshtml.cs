@@ -136,6 +136,7 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
                                 VendorEmail = Input.Email,
                                 VendorPhone = Input.UserPhone,
                                 VendorCity = Input.UserCity,
+                                VendorCountry = "EGYPT",
                                 VendorPassword = Input.Password
                             }) ;
                             _context.SaveChanges();

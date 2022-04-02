@@ -10,6 +10,7 @@ using E_commerce_website.Context;
 using Microsoft.AspNetCore.Hosting;
 using E_commerce_website.Areas.ProductArea.ViewModels;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace E_commerce_website.Areas.ProductArea.Controllers
 {
@@ -18,18 +19,24 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
     {
         private readonly OnlineshoppingContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
-
-        public ProductsController(OnlineshoppingContext context, IWebHostEnvironment hostEnvironment)
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly string _vendor;
+        public ProductsController(OnlineshoppingContext context, IWebHostEnvironment hostEnvironment, IHttpContextAccessor contextAccessor)
         {
             _context = context;
             webHostEnvironment = hostEnvironment;
+            _contextAccessor = contextAccessor;
+            _vendor = _contextAccessor.HttpContext.User.Identity.Name;
+
         }
 
         // GET: ProductArea/Products
         public async Task<IActionResult> Index()
         {
-            var onlineshoppingContext = _context.Products.Include(p => p.ProductCategory).Include(p => p.Vendor);
-            return View(await onlineshoppingContext.ToListAsync());
+            var vendorProducts = _context.Products.Where(c => c.Vendor.VendorEmail == _vendor)
+                                                    .Include(p => p.ProductCategory)
+                                                    .Include(p => p.Vendor);
+            return View(await vendorProducts.ToListAsync());
         }
 
         // GET: ProductArea/Products/Details/5
@@ -52,7 +59,19 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
 
             return View(product);
         }
-
+        public async Task<IActionResult> GetOrders()
+        {
+            var onlineshoppingContext = (from o in _context.Orders
+                                         from od in _context.OrderDetails
+                                         from p in _context.Products
+                                         from v in _context.Vendors
+                                         where o.OrderID == od.OrderID
+                                         && od.ProductID == p.ProductID
+                                         && p.VendorID == v.VendorID
+                                         && v.VendorEmail == _vendor
+                                         select o);
+            return View(await onlineshoppingContext?.ToListAsync());
+        }
         // GET: ProductArea/Products/Create
         public IActionResult Create()
         {
