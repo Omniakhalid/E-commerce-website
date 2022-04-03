@@ -8041,11 +8041,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ITI_SEC\\Github\\last version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
+      "projectUniqueName": "E:\\ITI_SEC\\Github\\Final Version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
       "projectName": "E-commerce-website",
-      "projectPath": "E:\\ITI_SEC\\Github\\last version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
+      "projectPath": "E:\\ITI_SEC\\Github\\Final Version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
       "packagesPath": "C:\\Users\\acs\\.nuget\\packages\\",
-      "outputPath": "E:\\ITI_SEC\\Github\\last version\\E-commerce-website\\E-commerce-website\\obj\\",
+      "outputPath": "E:\\ITI_SEC\\Github\\Final Version\\E-commerce-website\\E-commerce-website\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\acs\\AppData\\Roaming\\NuGet\\NuGet.Config",

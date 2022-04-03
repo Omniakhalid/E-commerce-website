@@ -122,6 +122,35 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", productViewModel.VendorID);
             return View();
         }
+        public IActionResult Options()
+        {
+            var vendorProducts = _context.Products.Where(c => c.Vendor.VendorEmail == _vendor)
+                                                    .Include(p => p.ProductCategory)
+                                                    .Include(p => p.Vendor);
+            ViewData["ProductID"] = new SelectList(vendorProducts, "ProductID", "ProductName");
+            ViewData["OptionGroupID"] = new SelectList(_context.OptionGroups, "OptionGroupID", "OptionGroupName");
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Options([Bind("OptionID,OptionName, OptionGroupID")] Option option, OptionViewModel optionViewModel)
+        {
+            Option op = new Option
+            {
+                OptionID = optionViewModel.OptionID,
+                OptionName = optionViewModel.OptionName,
+                OptionGroupID = optionViewModel.OptionGroupID,
+            };
+            ProductOption productOption = new ProductOption()
+            {
+                OptionID = optionViewModel.OptionID,
+                ProductID = optionViewModel.ProductID,
+                id = optionViewModel.id
+            };
+            _context.Add(op);
+            _context.Add(productOption);
+            await _context.SaveChangesAsync();
+            return View();
+        }
 
         // GET: ProductArea/Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
