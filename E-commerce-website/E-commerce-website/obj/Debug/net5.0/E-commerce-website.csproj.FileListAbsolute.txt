@@ -225,3 +225,6 @@ D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerc
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.genruntimeconfig.cache
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.csproj.AssemblyReference.cache
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Maps\Index.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\GetOrders.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\Options.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Shared\_Layout.cshtml.g.cs

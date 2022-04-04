@@ -129,7 +129,6 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
                     {
                         if (Input.type==UserType.Vendor)
                         {
-                            await _userManager.AddToRoleAsync(user, UserType.Vendor.ToString());
                             _context.Add(new Vendor()
                             {
                                 VendorName = Input.UserFirstName,
