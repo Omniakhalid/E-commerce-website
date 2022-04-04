@@ -17,6 +17,7 @@ namespace E_commerce_website.Models
         [Key]
         public int ProductID { get; set; }
         public int Quantity { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalPrice { get; set; }
 
         [ForeignKey(nameof(ProductID))]

@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<E_commerce_website.Models.CartItem>
+@using Microsoft.Extensions.Options
+@using  E_commerce_website.Controllers
 
+@inject IOptions<StripeSettings> Stripe
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,6 +14,7 @@
     var Quantity = ViewBag.Quantity;
     Decimal TotalPrice = 0M;
     var TotalPricsCart = ViewBag.TotalPrice;
+    List<CartItemsOption> CartItemsWizOptions = ViewBag.CartItemsWizOptions;
 }
 
 <link rel="stylesheet" href="~/css/CartStyle.css"> 
@@ -34,7 +38,7 @@
                     TotalPrice = item.Product.ProductPrice * item.Quantity;
                   <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="~/images/@item.Product.ProductImage"></div>
+                        <div class="col-2"><img class="img-fluid" src="~/dbImages/@item.Product.ProductImage"></div>
                         <div class="col">
                             <div class="row text-muted">@item.Product.ProductCategory.CategoryName</div>
                             <div class="row">@item.Product.ProductName</div>
@@ -51,6 +55,15 @@
                          </div>
                         <div class="col"> @TotalPrice EGP<span class="close">&#10005;</span></div>
                     </div>
+                   <div class="row main align-items-center">
+                    @foreach (var option in CartItemsWizOptions.Where(c=>c.ProductID == item.ProductID).ToList())
+                        {
+                            
+                                <div class="col-3 text-muted">@option.Option.OptionGroup.OptionGroupName</div>
+                                <div class="col-3">@option.Option.OptionName</div>
+                        }
+                    </div>
+                 
                   </div>    
                  }
          
@@ -79,7 +92,12 @@
                     <div class="col text-right">@TotalPricsCart EGP</div>
                 </div> 
             
-                    <a class="btn" asp-action= "Checkout" asp-controller = "Orders" asp-area="ClientArea" > CONTINUE TO CHECKOUT</a>
+                    <a class="btn" asp-action= "Checkout" asp-controller = "Orders" asp-area="ClientArea"> CONTINUE TO CHECKOUT</a>
+                    <form action="/Home/Charge" method="POST">
+                          <script src="https://js.stripe.com/v3/" class="stripe-button"  data-key="@Stripe.Value.PublishableKey" data-locale="auto" data-description="Total Amount" data-amount="@Model">
+                                
+                          </script>
+                   </form>
             </div>
 
         </div>

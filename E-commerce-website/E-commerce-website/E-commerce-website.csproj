@@ -6,14 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ClientArea\Controllers\CartControllerCopy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EfCore.SchemaCompare" Version="5.1.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -23,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\ClientArea\Data\" />
+    <Folder Include="Areas\ClientArea\Models\" />
     <Folder Include="Areas\SellerArea\Controllers\" />
     <Folder Include="Areas\SellerArea\Data\" />
     <Folder Include="Areas\SellerArea\Models\" />

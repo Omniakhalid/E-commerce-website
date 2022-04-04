@@ -5,7 +5,7 @@
 
 <body style="background-color:white">
      
-        <div class="container">
+<div class="container">
         <div class="heading_container heading_center">
         <h2>
             Order History
@@ -19,21 +19,31 @@
             Order at Day @item.OrderDate
             </div>
             <div class="card-body">
-                    <blockquote class="blockquote mb-3">
                         @foreach(var order in item.OrderDetails)
                             {
-                                <p> Product @order.ProductName -> @order.Quanity </p>
-                                <div style="float:right">
-                                    <img src="~/dbImages/@order.Product.ProductImage"/>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <span class="text-muted" style="font:xx-large">Product @order.ProductName </span>
+                                             </div>
+                                             <br/>
+                                             <div class="col-10">
+                                               <p style="font:large">Quantity: <span style="font:medium"> @order.Quanity </span></p>
+                                             </div>
+                                         </div>
+                                    </div>
+                                     <div class="col-5">
+                                        <img class="card-img" style="float:right;width:50%" src="~/dbImages/@order.Product.ProductImage"/>
+                                    </div>
                                 </div>
                             }
                         <p>Total Price @item.OrderAmount</p>
-                    </blockquote>
             </div>
         </div>
     }
           
-    </div>   
+    </div>  
       
 </body>
 

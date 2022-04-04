@@ -1,10 +1,12 @@
-﻿<link rel="stylesheet" href="~/css/CartStyle.css"> 
-
+﻿@using Microsoft.Extensions.Options
+@using  E_commerce_website.Controllers
+@inject IOptions<StripeSettings> Stripe
+<link rel="stylesheet" href="~/css/CartStyle.css"> 
 
 <body>
 
-<div class="card">
-    <div class="row">
+ <div class="row">
+
         <div class="col-md-8 cart">
             <div class="title">
                 <div class="row">
@@ -15,16 +17,55 @@
             </div>
            
               <div class="row">
-               
-                <form style="display:contents" asp-action="create" asp-controller="Orders">
+              
+                <form  asp-action="Create" asp-controller="Orders"  style="display:contents"   >
                    
-                        <div class="input-group row  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Name"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderEmail"  placeholder="Email"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderPhone" placeholder="Phone Number"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="ShippingAddress" placeholder="Street address"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderCity" placeholder="City"> </div>
-                        <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderCountry"  placeholder="Country"> </div>
-                        <button type="submit" value="Submit"/>
+                            <div class="input-group row  mb-3 mx-3"> <input type="text" class="form-control" placeholder="Name"> </div>
+                            <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderEmail"  placeholder="Email"> </div>
+                            <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderPhone" placeholder="Phone Number"> </div>
+                            <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="ShippingAddress" placeholder="Street address"> </div>
+                            <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderCity" placeholder="City"> </div>
+                            <div class="input-group  mb-3 mx-3"> <input type="text" class="form-control" name="OrderCountry"  placeholder="Country"> </div>
+                           @* <input type="text" hidden class="form-control" name="OrderAmount"  value=@Model> 
+                       *@
+                             
+                           <div class="input-group  mb-3 mx-3">
+                               <div class="row">
+                                   <div class="col-5">
+
+                                         <label> <input type="radio" class="btn-check" name="colorCheckbox" value="Cash" checked> Cash</label>
+                                   </div>
+                                   <div class="col-5">
+                                         <label> <input type="radio" class="btn-check" name="colorCheckbox" value="PayPal"> PayPal</label>
+
+                                   </div>
+                               </div>
+                           
+                               </div>
+
+                   @*     <div class="input-group  mb-3 mx-3 form-b" style="display: none"> 
+
+                            <form action="/your-server-side-code"  method="POST">
+                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="xxx"
+                                        data-content = "2 Tishirts"
+                                        data-amount="@Model"
+                                        data-name="Payment Details"         
+                                        data-locale="auto">
+                                    </script>
+                                    <script>
+                                        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                    </script>
+                                    <button type="submit" class="btn btn-primary"> PayPal Details</button>
+                             </form>
+
+                        </div>*@
+
+                        <div class="input-group  mb-3 mx-3">
+
+                            <button type="submit" class="btn"> CHECKOUT</button>
+                        </div>
+
                 </form>
                    
               </div>    
@@ -36,40 +77,33 @@
              </a>   
              <span class="text-muted">Back to Cart </span>
             </div>
-
+            s
         </div>
 
 
-        <div class="col-md-4 summary">
-            <div class="py-2">
-                <h4><b>Payment Deatils</b></h4>
-            </div>
-            <hr>
-          
-            <form>
-                   <div class="row"><input type="text" id="cname" name="cardname" class="form-control" placeholder="Name on Card"></div> 
-                   <div class="row"><input type="text" id="ccnum" name="cardnumber" class="form-control" placeholder="Credit Card Number"></div> 
-                   <div class="row"><input type="text" id="expmonth" name="expmonth" class="form-control" placeholder="Exp Month"></div> 
-                   <div class="row">
-                       <div class="col-7">
+       
+ <div class="col-md-4">
+        
+         @*  @Html.Partial("~/Areas/ClientArea/Views/Maps/Index.cshtml")*@
+ </div>
 
-                            <input type="text" id="expyear" name="expmonth" class="form-control" placeholder="Exp Year">
-                       </div>
-
-                       <div class="col-5">
-
-                            <input type="text" id="cvv" name="cvv" class="form-control" placeholder="CVV">
-                       </div>
-                    </div> 
-                    
-                    <a asp-action="PaymentwithPaypal" asp-controller="Payment" asp-area=""> Check EL 5ra</a>
-            </form>
-            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-            </div> <button class="btn">CHECKOUT</button>
-        </div>
-
-    </div>
 </div>
 </body>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+            $(document).ready(function() {
+                $('input[name=colorCheckbox]:radio').change(function(e) {
+                let value = e.target.value.trim()
 
+                switch (value) {
+                    case 'PayPal':
+                    $('.form-b').show()
+                    break;
+                    default:
+                    $('.form-b').hide()
+                    break;
+                }
+                })
+            })
+</script>

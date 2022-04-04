@@ -13,8 +13,8 @@ namespace E_commerce_website.Models
         public User()
         {
             CartItems = new HashSet<CartItem>();
+            OrderItemsOptions = new HashSet<OrderItemsOption>();
             Orders = new HashSet<Order>();
-            UserRegisterDate = DateTime.Now;
         }
 
         [Key]
@@ -48,6 +48,8 @@ namespace E_commerce_website.Models
 
         [InverseProperty(nameof(CartItem.User))]
         public virtual ICollection<CartItem> CartItems { get; set; }
+        [InverseProperty(nameof(OrderItemsOption.User))]
+        public virtual ICollection<OrderItemsOption> OrderItemsOptions { get; set; }
         [InverseProperty(nameof(Order.User))]
         public virtual ICollection<Order> Orders { get; set; }
     }

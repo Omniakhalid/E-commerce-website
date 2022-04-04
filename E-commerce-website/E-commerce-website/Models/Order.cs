@@ -14,6 +14,7 @@ namespace E_commerce_website.Models
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            OrderItemsOptions = new HashSet<OrderItemsOption>();
             OrderDate = DateTime.Now;
         }
 
@@ -21,7 +22,7 @@ namespace E_commerce_website.Models
         public int OrderID { get; set; }
         public int UserID { get; set; }
         [Column(TypeName = "money")]
-        public decimal OrderAmount { get; set; }
+        public decimal OrderAmount  { get; set; }
         [Required]
         [StringLength(100)]
         public string ShippingAddress { get; set; }
@@ -46,5 +47,7 @@ namespace E_commerce_website.Models
         public virtual User User { get; set; }
         [InverseProperty(nameof(OrderDetail.Order))]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [InverseProperty(nameof(OrderItemsOption.Order))]
+        public virtual ICollection<OrderItemsOption> OrderItemsOptions { get; set; }
     }
 }

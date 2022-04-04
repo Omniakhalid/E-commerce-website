@@ -1,0 +1,20 @@
+﻿@using Microsoft.Extensions.Options
+@using  E_commerce_website.Controllers
+
+@inject IOptions<StripeSettings> Stripe
+@model decimal
+
+<form action="/your-server-side-code" method="POST">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="xxx"
+        data-amount="999"
+        data-name="zzz"         
+        data-locale="auto">
+    </script>
+    <script>
+        // Hide default stripe button, be careful there if you
+        // have more than 1 button of that class
+        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+    </script>
+    <button type="submit" class="yourCustomClass">Buy my things</button>
+</form>

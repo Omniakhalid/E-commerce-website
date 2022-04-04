@@ -12,10 +12,10 @@ namespace E_commerce_website.Models
     [Index(nameof(ProductID), Name = "IX_ProductOptions_ProductID")]
     public partial class ProductOption
     {
-        public int OptionID { get; set; }
-        public int ProductID { get; set; }
         [Key]
         public int id { get; set; }
+        public int OptionID { get; set; }
+        public int ProductID { get; set; }
 
         [ForeignKey(nameof(OptionID))]
         [InverseProperty("ProductOptions")]

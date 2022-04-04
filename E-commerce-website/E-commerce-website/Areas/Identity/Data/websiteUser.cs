@@ -10,8 +10,10 @@ namespace E_commerce_website.Areas.Identity.Data
     // Add profile data for application users by adding properties to the websiteUser class
     public enum UserType
     {
-        Vendor, User
+        Vendor, User , Admin
     }
+
+    
     public class websiteUser : IdentityUser
     {
         [Required]

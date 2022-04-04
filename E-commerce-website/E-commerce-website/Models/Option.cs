@@ -13,6 +13,8 @@ namespace E_commerce_website.Models
     {
         public Option()
         {
+            CartItemsOptions = new HashSet<CartItemsOption>();
+            OrderItemsOptions = new HashSet<OrderItemsOption>();
             ProductOptions = new HashSet<ProductOption>();
         }
 
@@ -26,6 +28,10 @@ namespace E_commerce_website.Models
         [ForeignKey(nameof(OptionGroupID))]
         [InverseProperty("Options")]
         public virtual OptionGroup OptionGroup { get; set; }
+        [InverseProperty(nameof(CartItemsOption.Option))]
+        public virtual ICollection<CartItemsOption> CartItemsOptions { get; set; }
+        [InverseProperty(nameof(OrderItemsOption.Option))]
+        public virtual ICollection<OrderItemsOption> OrderItemsOptions { get; set; }
         [InverseProperty(nameof(ProductOption.Option))]
         public virtual ICollection<ProductOption> ProductOptions { get; set; }
     }

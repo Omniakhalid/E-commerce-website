@@ -18,6 +18,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CartItemsOptions]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[OptionGroups]",
          "ObjectType": 0
       },
@@ -27,6 +31,10 @@
       },
       {
          "Name": "[dbo].[OrderDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderItemsOptions]",
          "ObjectType": 0
       },
       {

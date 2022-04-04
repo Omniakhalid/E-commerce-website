@@ -15,7 +15,9 @@ namespace E_commerce_website.Models
         public Product()
         {
             CartItems = new HashSet<CartItem>();
+            CartItemsOptions = new HashSet<CartItemsOption>();
             OrderDetails = new HashSet<OrderDetail>();
+            OrderItemsOptions = new HashSet<OrderItemsOption>();
             ProductOptions = new HashSet<ProductOption>();
         }
 
@@ -49,8 +51,12 @@ namespace E_commerce_website.Models
         public virtual Vendor Vendor { get; set; }
         [InverseProperty(nameof(CartItem.Product))]
         public virtual ICollection<CartItem> CartItems { get; set; }
+        [InverseProperty(nameof(CartItemsOption.Product))]
+        public virtual ICollection<CartItemsOption> CartItemsOptions { get; set; }
         [InverseProperty(nameof(OrderDetail.Product))]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [InverseProperty(nameof(OrderItemsOption.Product))]
+        public virtual ICollection<OrderItemsOption> OrderItemsOptions { get; set; }
         [InverseProperty(nameof(ProductOption.Product))]
         public virtual ICollection<ProductOption> ProductOptions { get; set; }
     }

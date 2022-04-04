@@ -20,24 +20,25 @@ namespace E_commerce_website.Context
         }
 
         public virtual DbSet<CartItem> CartItems { get; set; }
+        public virtual DbSet<CartItemsOption> CartItemsOptions { get; set; }
         public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<OptionGroup> OptionGroups { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<OrderItemsOption> OrderItemsOptions { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<ProductOption> ProductOptions { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
 
-      
+    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>(entity =>
             {
-                entity.HasKey(e => new { e.UserID, e.ProductID })
-                    .HasName("PK_CartItems_1");
+                entity.HasKey(e => new { e.UserID, e.ProductID });
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.CartItems)
@@ -50,6 +51,24 @@ namespace E_commerce_website.Context
                     .HasForeignKey(d => d.UserID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CartItems_Users");
+            });
+
+            modelBuilder.Entity<CartItemsOption>(entity =>
+            {
+                entity.HasKey(e => new { e.UserID, e.ProductID, e.OptionID })
+                    .HasName("PK_CartItemsOptions_1");
+
+                entity.HasOne(d => d.Option)
+                    .WithMany(p => p.CartItemsOptions)
+                    .HasForeignKey(d => d.OptionID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CartItemsOptions_Options");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.CartItemsOptions)
+                    .HasForeignKey(d => d.ProductID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CartItemsOptions_Products");
             });
 
             modelBuilder.Entity<Option>(entity =>
@@ -93,6 +112,35 @@ namespace E_commerce_website.Context
                     .HasForeignKey(d => d.ProductID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetails_Products");
+            });
+
+            modelBuilder.Entity<OrderItemsOption>(entity =>
+            {
+                entity.HasKey(e => new { e.OrderID, e.UserID, e.ProductID, e.OptionID });
+
+                entity.HasOne(d => d.Option)
+                    .WithMany(p => p.OrderItemsOptions)
+                    .HasForeignKey(d => d.OptionID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderItemsOptions_Options");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderItemsOptions)
+                    .HasForeignKey(d => d.OrderID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderItemsOptions_Orders");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.OrderItemsOptions)
+                    .HasForeignKey(d => d.ProductID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderItemsOptions_Products");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.OrderItemsOptions)
+                    .HasForeignKey(d => d.UserID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderItemsOptions_Users");
             });
 
             modelBuilder.Entity<Product>(entity =>

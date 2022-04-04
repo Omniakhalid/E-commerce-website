@@ -16,7 +16,7 @@ namespace E_commerce_website.Migrations.Onlineshopping
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.12")
+                .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("E_commerce_website.Models.CartItem", b =>
@@ -33,14 +33,34 @@ namespace E_commerce_website.Migrations.Onlineshopping
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("UserID", "ProductID")
-                        .HasName("PK_CartItems_1");
+                    b.HasKey("UserID", "ProductID");
 
                     b.HasIndex(new[] { "ProductID" }, "IX_CartItems_ProductID");
 
                     b.HasIndex(new[] { "UserID" }, "IX_CartItems_UserID");
 
                     b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("E_commerce_website.Models.CartItemsOption", b =>
+                {
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OptionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserID", "ProductID", "OptionID")
+                        .HasName("PK_CartItemsOptions_1");
+
+                    b.HasIndex("OptionID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("CartItemsOptions");
                 });
 
             modelBuilder.Entity("E_commerce_website.Models.Option", b =>
@@ -161,6 +181,34 @@ namespace E_commerce_website.Migrations.Onlineshopping
                     b.HasIndex(new[] { "ProductID" }, "IX_OrderDetails_DetailProductID");
 
                     b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("E_commerce_website.Models.OrderItemsOption", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OptionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderID", "UserID", "ProductID");
+
+                    b.HasIndex("OptionID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("OrderItemsOptions");
                 });
 
             modelBuilder.Entity("E_commerce_website.Models.Product", b =>
@@ -389,6 +437,25 @@ namespace E_commerce_website.Migrations.Onlineshopping
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("E_commerce_website.Models.CartItemsOption", b =>
+                {
+                    b.HasOne("E_commerce_website.Models.Option", "Option")
+                        .WithMany("CartItemsOptions")
+                        .HasForeignKey("OptionID")
+                        .HasConstraintName("FK_CartItemsOptions_Options")
+                        .IsRequired();
+
+                    b.HasOne("E_commerce_website.Models.Product", "Product")
+                        .WithMany("CartItemsOptions")
+                        .HasForeignKey("ProductID")
+                        .HasConstraintName("FK_CartItemsOptions_Products")
+                        .IsRequired();
+
+                    b.Navigation("Option");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("E_commerce_website.Models.Option", b =>
                 {
                     b.HasOne("E_commerce_website.Models.OptionGroup", "OptionGroup")
@@ -428,6 +495,41 @@ namespace E_commerce_website.Migrations.Onlineshopping
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("E_commerce_website.Models.OrderItemsOption", b =>
+                {
+                    b.HasOne("E_commerce_website.Models.Option", "Option")
+                        .WithMany("OrderItemsOptions")
+                        .HasForeignKey("OptionID")
+                        .HasConstraintName("FK_OrderItemsOptions_Options")
+                        .IsRequired();
+
+                    b.HasOne("E_commerce_website.Models.Order", "Order")
+                        .WithMany("OrderItemsOptions")
+                        .HasForeignKey("OrderID")
+                        .HasConstraintName("FK_OrderItemsOptions_Orders")
+                        .IsRequired();
+
+                    b.HasOne("E_commerce_website.Models.Product", "Product")
+                        .WithMany("OrderItemsOptions")
+                        .HasForeignKey("ProductID")
+                        .HasConstraintName("FK_OrderItemsOptions_Products")
+                        .IsRequired();
+
+                    b.HasOne("E_commerce_website.Models.User", "User")
+                        .WithMany("OrderItemsOptions")
+                        .HasForeignKey("UserID")
+                        .HasConstraintName("FK_OrderItemsOptions_Users")
+                        .IsRequired();
+
+                    b.Navigation("Option");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commerce_website.Models.Product", b =>
@@ -470,6 +572,10 @@ namespace E_commerce_website.Migrations.Onlineshopping
 
             modelBuilder.Entity("E_commerce_website.Models.Option", b =>
                 {
+                    b.Navigation("CartItemsOptions");
+
+                    b.Navigation("OrderItemsOptions");
+
                     b.Navigation("ProductOptions");
                 });
 
@@ -481,13 +587,19 @@ namespace E_commerce_website.Migrations.Onlineshopping
             modelBuilder.Entity("E_commerce_website.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("OrderItemsOptions");
                 });
 
             modelBuilder.Entity("E_commerce_website.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
 
+                    b.Navigation("CartItemsOptions");
+
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("OrderItemsOptions");
 
                     b.Navigation("ProductOptions");
                 });
@@ -500,6 +612,8 @@ namespace E_commerce_website.Migrations.Onlineshopping
             modelBuilder.Entity("E_commerce_website.Models.User", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("OrderItemsOptions");
 
                     b.Navigation("Orders");
                 });

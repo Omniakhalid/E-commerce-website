@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using E_commerce_website.Context;
 using E_commerce_website.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace E_commerce_website.Areas.ClientArea.Controllers
 {
@@ -26,8 +27,8 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         {
             var onlineshoppingContext = _context.Products
                                                 .Include(p => p.ProductCategory)
-                                                .Include(p => p.Vendor)
-                                                ;
+                                                .Include(p => p.Vendor);
+                                               
 
 
             return View(await onlineshoppingContext.ToListAsync());
@@ -54,23 +55,24 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
                                             .Where(p => p.ProductID == id).ToList()
                                             .GroupBy(p => p.Option.OptionGroup.OptionGroupName);
 
-            
-            foreach(var group in ProductOptions)
-            {
-                Debug.WriteLine(group.Select(c=>c.Option.OptionGroup.OptionGroupName));
-
-                foreach (var element in group)
-                {
-                    
-                    Debug.WriteLine($"{element.Option.OptionName}{element.Option.OptionID}");
-                }
-            }
 
             ViewBag.ProductOptions = ProductOptions;
 
             return View(product);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(int id ,IEnumerable<int> Options)
+        {
+            var returnData = Options;
+          
+            return View("Cart");
+        }
+
+
+        [NonAction]
         // GET: ClientArea/Products/Create
         public IActionResult Create()
         {
@@ -83,6 +85,7 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [NonAction]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductID,ProductName,ProductPrice,ProductWeight,ProductShortDes,ProductLongDes,ProductImage,ProductCategoryID,ProductUpdateDate,ProductStock,VendorID")] Product product)
         {
@@ -98,6 +101,8 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         }
 
         // GET: ClientArea/Products/Edit/5
+
+        [NonAction]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -119,6 +124,8 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [NonAction]
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductID,ProductName,ProductPrice,ProductWeight,ProductShortDes,ProductLongDes,ProductImage,ProductCategoryID,ProductUpdateDate,ProductStock,VendorID")] Product product)
         {
