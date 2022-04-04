@@ -73,7 +73,7 @@ namespace E_commerce_website.Context
 
             modelBuilder.Entity<Option>(entity =>
             {
-                entity.Property(e => e.OptionID).ValueGeneratedNever();
+                entity.Property(e => e.OptionID).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.OptionGroup)
                     .WithMany(p => p.Options)
