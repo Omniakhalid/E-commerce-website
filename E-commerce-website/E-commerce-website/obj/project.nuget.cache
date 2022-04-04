@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "yMIyq8/LyDOy77JBurn1t0OBgeSRJ5Ggh7/pPg5Kg2Z24K6QBdgBd4Gdju1XW2nJzFZC8X3Gz+azIqjDvEsqHw==",
   "success": true,
-  "projectFilePath": "D:\\ITI_Data\\BigProjects\\MVC\\Code\\E-commerce-website\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
+  "projectFilePath": "E:\\ITI_SEC\\Github\\Final Version\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\EG\\.nuget\\packages\\efcore.schemacompare\\5.1.3\\efcore.schemacompare.5.1.3.nupkg.sha512",
     "C:\\Users\\EG\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
