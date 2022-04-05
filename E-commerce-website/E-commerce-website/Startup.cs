@@ -81,7 +81,19 @@ namespace E_commerce_website
             services.AddScoped<IUserService, UserService>();
 
             #endregion
-
+            #region External Logins
+            services.AddAuthentication().AddGoogle(op =>
+            {
+                IConfigurationSection googleAuthSection = Configuration.GetSection("Authentication:Google");
+                op.ClientId = googleAuthSection["ClientId"];
+                op.ClientSecret = googleAuthSection["ClientSecret"];
+            }).AddFacebook(op =>
+            {
+                IConfigurationSection facebookAuthSection = Configuration.GetSection("Authentication:FaceBook");
+                op.ClientId = facebookAuthSection["ClientId"];
+                op.ClientSecret = facebookAuthSection["ClientSecret"];
+            });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

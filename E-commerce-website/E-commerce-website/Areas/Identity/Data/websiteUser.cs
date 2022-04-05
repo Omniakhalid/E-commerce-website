@@ -16,16 +16,16 @@ namespace E_commerce_website.Areas.Identity.Data
     
     public class websiteUser : IdentityUser
     {
-        [Required]
+       
         [StringLength(50)]
         public string UserFirstName { get; set; }
         
-        [Required]
+       
         [StringLength(10)]
         public string UserCity { get; set; }
         public string UserPhone { get; set; }
       
-        [Required]
+        
         [StringLength(100)]
         public string UserAddress { get; set; }
 
