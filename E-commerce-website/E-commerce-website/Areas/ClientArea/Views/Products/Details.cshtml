@@ -29,23 +29,24 @@
                     <h3 class="item_name">@Html.DisplayFor(model => model.ProductName)</h3>
                     <p>Category : @Html.DisplayFor(model => model.ProductCategory.CategoryName)</p>
                  
-                @foreach(var group in Options)
-                {
-                    <p> @(group.Key) </p>
-                    <select name="options" id="options">
-
-
-
-                    @foreach (var element in group)
+                    @foreach(var group in Options)
                     {
-                        <option value= "@(element.OptionID)">@(element.Option.OptionName)</option>  
+                        <p> @(group.Key) </p>
+                        <select name="options" id="options">
+
+
+
+                        @foreach (var element in group)
+                        {
+                            <option value= "@(element.OptionID)">@(element.Option.OptionName)</option>  
+                        }
+
+
+                        </select>
+                        <br/>
                     }
 
-
-                    </select>
-                    <br/>
-                }
-
+                    
                
               
                     <div class="single-price">

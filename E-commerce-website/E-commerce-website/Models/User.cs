@@ -15,6 +15,7 @@ namespace E_commerce_website.Models
             CartItems = new HashSet<CartItem>();
             OrderItemsOptions = new HashSet<OrderItemsOption>();
             Orders = new HashSet<Order>();
+            UserRegisterDate = DateTime.Now;
         }
 
         [Key]
