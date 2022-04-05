@@ -143,7 +143,7 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
                         }
                         else if (Input.type == UserType.User)
                         {
-                            await _userManager.AddToRoleAsync(user, UserType.User.ToString());
+                           // await _userManager.AddToRoleAsync(user, UserType.User.ToString());
 
                             var User = new User()
                             {

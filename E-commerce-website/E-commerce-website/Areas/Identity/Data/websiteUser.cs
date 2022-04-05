@@ -31,6 +31,6 @@ namespace E_commerce_website.Areas.Identity.Data
 
         
         public UserType type { get; set; }
-
+        public byte[] Userimage { get; set; }
     }
 }

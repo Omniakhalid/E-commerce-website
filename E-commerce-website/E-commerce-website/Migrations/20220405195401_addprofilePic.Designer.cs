@@ -4,14 +4,16 @@ using E_commerce_website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_commerce_website.Migrations
 {
     [DbContext(typeof(E_commerce_websiteContext))]
-    partial class E_commerce_websiteContextModelSnapshot : ModelSnapshot
+    [Migration("20220405195401_addprofilePic")]
+    partial class addprofilePic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
