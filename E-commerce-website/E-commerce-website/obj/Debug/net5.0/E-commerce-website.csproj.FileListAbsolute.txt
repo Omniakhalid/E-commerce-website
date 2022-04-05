@@ -227,6 +227,7 @@ D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerc
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ClientArea\Views\Maps\Index.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\GetOrders.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Products\Options.cshtml.g.cs
+D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Shared\_Layout2.cshtml.g.cs
 D:\ITI_Data\BigProjects\MVC\Code\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\ProductArea\Views\Shared\_Layout.cshtml.g.cs
 G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.dll
 G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\refint\E-commerce-website.dll

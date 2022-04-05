@@ -24,15 +24,15 @@ namespace E_commerce_website.Areas.ClientArea.Services
             _cartService = cartService;
             _orderItemsOptionService = orderItemsOptionService;
         }
-        private void InsertCartIemsDetails(int OrderID)
+        private void InsertCartIemsDetails(int orderID)
         {
-            var Cart = _cartService.GetAll(OrderID);
+            var Cart = _cartService.GetAll(orderID);
 
             foreach (var item in Cart)
             {
                 _orderDetailService.Add(new OrderDetail()
                 {
-                    OrderID = OrderID,
+                    OrderID = orderID,
                     ProductID = item.ProductID,
                     Quanity = item.Quantity,
                     ProductName = item.Product?.ProductName,
