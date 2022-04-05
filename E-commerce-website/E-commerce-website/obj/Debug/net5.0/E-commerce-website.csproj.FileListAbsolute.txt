@@ -459,4 +459,3 @@ G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\
 G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\E-commerce-website.genruntimeconfig.cache
 G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\ref\E-commerce-website.dll
 G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
-G:\iti\MVC\project\E-commerce-website\E-commerce-website\E-commerce-website\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.g.cs
