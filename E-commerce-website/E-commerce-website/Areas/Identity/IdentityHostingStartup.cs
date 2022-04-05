@@ -20,9 +20,9 @@ namespace E_commerce_website.Areas.Identity
                 services.AddDbContext<E_commerce_websiteContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("E_commerce_websiteContextConnection")));
-
                 services.AddDefaultIdentity<websiteUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<E_commerce_websiteContext>();
+           .AddRoles<IdentityRole>()
+           .AddEntityFrameworkStores<E_commerce_websiteContext>();
                 //services.AddIdentity<User, IdentityRole>(opt =>
                 //{
                 //    opt.Password.RequiredLength = 7;
