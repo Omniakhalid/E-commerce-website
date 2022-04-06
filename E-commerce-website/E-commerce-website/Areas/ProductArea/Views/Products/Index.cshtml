@@ -25,32 +25,33 @@
  </head>
 
  
-  <div class="main">
-  <div class="shell">
-    <div class="container">
+  <div class="container">
       <div class="row">
           @foreach (var item in Model) {
-        <div >
+        <div class="col-3">
           <div class="wsk-cp-product">
             <div class="wsk-cp-img">
                  
-              <img src="~/dbImages/@item.ProductImage" alt="Product" class="img-responsive" />
+                <a  asp-action="Details" asp-route-id="@item.ProductID" ><img src="~/dbImages/@item.ProductImage" alt="Product" class="img-responsive" /></a> 
             </div>
             <div class="wsk-cp-text">
-              
-              <div class="title-product">
-                <h3>@Html.DisplayFor(modelItem => item.ProductName)</h3>
+               <div class="row  justify-content-between" style="color:white" >
+                   <div class="col-4"  >
+                        <a  asp-action="Edit"  asp-route-id="@item.ProductID"> <i class="fa fa-lg fa-edit circle-icon"></i> </a> 
+                   </div>
+
+                     <div class="col-4" >
+                        <a  asp-action="Delete" asp-route-id="@item.ProductID" ><i class="fa fa-trash  fa-lg circle-icon"></i></a>
+                   </div>
+             </div>
+
+
+              <div class="title-product" >
+                <h3 style="color:steelblue">@Html.DisplayFor(modelItem => item.ProductName)</h3>
               </div>
              
               <div class="card-footer" style="background-color: white;">
-                <div class="wcf-left"><span class="price" style="padding-left: 60px;">Price : @Html.DisplayFor(modelItem => item.ProductPrice)</span></div>
-                <br><br>
-                  <a asp-action="Edit"  asp-route-id="@item.ProductID" class="btn btn-secondary" style="background-color: #007bff;border-color:#007bff;" >Edit</a> 
-           
-                 <a asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-secondary" style="background-color: #007bff;border-color:#007bff">Details</a> 
-            
-                    <a asp-action="Delete" asp-route-id="@item.ProductID"class="btn btn-secondary" style="background-color: #007bff;border-color:#007bff">Delete</a>
-          
+                <div class="wcf-left"><span class="price" style="padding-left: 50px;">Price : @Html.DisplayFor(modelItem => item.ProductPrice)</span></div>
               </div>
             </div>
           </div>
@@ -58,8 +59,7 @@
         }
       </div>
       </div>
-    </div>
-  </div>
+
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

@@ -13,44 +13,42 @@
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="~/css/CartStyle.css"> 
 </head>
 
- <div style ="margin-left:200px">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Add Product</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form asp-action="Create"  enctype="multipart/form-data"  style="font-size:13px;color:gray">
+<body>
+    <div class="cart col-md-8">
+           <div class="title">
+                <div class="row">
+                        <h1><b>Add New Product</b></h1>
+                    
+                </div>
+            </div>
+          <form asp-action="Create"  enctype="multipart/form-data"  style="">
             <div class="form-group">
                 <label asp-for="ProductName">Product Name</label>
-              <input asp-for="ProductName" type="text" class="form-control" style="font-size:13px">
+              <input asp-for="ProductName" type="text" class="form-control" style="">
               <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProductPrice">Product Price</label>
-              <input asp-for="ProductPrice" type="number" class="form-control" style="font-size:13px">
+              <input asp-for="ProductPrice" type="number" class="form-control" style="">
               <span asp-validation-for="ProductPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProductShortDes">Product Short Describtion</label>
-              <input asp-for="ProductShortDes"  type="text" class="form-control" style="font-size:13px">
+              <input asp-for="ProductShortDes"  type="text" class="form-control" style="">
               <span asp-validation-for="ProductShortDes" class="text-danger"></span>
             </div>
             
             <div class="form-group">
                 <label asp-for="ProductLongDes">Product Long Describtion</label>
-              <input asp-for="ProductLongDes"  type="text" class="form-control"  style="font-size:13px">
+              <input asp-for="ProductLongDes"  type="text" class="form-control"  style="">
               <span asp-validation-for="ProductLongDes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProductWeight">Product Weight</label>
-              <input asp-for="ProductWeight"  type="number" class="form-control" style="font-size:13px">
+              <input asp-for="ProductWeight"  type="number" class="form-control" style="">
               <span asp-validation-for="ProductWeight" class="text-danger"></span>
             </div>
             
@@ -58,7 +56,7 @@
 
              <div class="form-group">
                 <label asp-for="ProductImageFile" class="control-label"></label>
-                <input type="file" accept="image/*" asp-for="ProductImageFile" class="form-control"  style="font-size:13px"/>
+                <input type="file" accept="image/*" asp-for="ProductImageFile" class="form-control"  style=""/>
                 <span asp-validation-for="ProductImageFile" class="text-danger"></span>
             </div>
 
@@ -66,14 +64,14 @@
             <div class="form-group">
                 <label asp-for="ProductCategoryID" >Category </label>
            
-                <select asp-for="ProductCategoryID" class ="form-control" asp-items="ViewBag.ProductCategoryID" style="height:34px;font-size:13px"></select>
+                <select asp-for="ProductCategoryID" class ="form-control" asp-items="ViewBag.ProductCategoryID" style="height:34px;"></select>
            
             
             </div>
           
             <div class="form-group">
                 <label asp-for="ProductStock">Product Stock</label>
-              <input asp-for="ProductStock"  type="number" class="form-control" style="font-size:13px">
+              <input asp-for="ProductStock"  type="number" class="form-control" style="">
               <span asp-validation-for="ProductStock" class="text-danger"></span>
             </div>
 
@@ -81,20 +79,30 @@
             <div class="form-group">
                 <label asp-for="VendorID">Vendor </label>
            
-              <select asp-for="VendorID" class ="form-control" asp-items="ViewBag.VendorID" style="height:34px;font-size:13px"></select>
+              <select asp-for="VendorID" class ="form-control" asp-items="ViewBag.VendorID" style="height:34px;"></select>
            
             
             </div>
             <div class="form-group">
-              <input type="submit" value="Create" class="btn btn-primary"  style="background-color: #007bff;border-color:#007bff;margin-left:20px;font-size:13px"/>
-                  <a asp-action="Index" class="btn btn-secondary" style="background-color: #007bff;border-color:#007bff;margin-left:20px;font-size:13px">Back to List</a>
+                <div class="row justify-content-between">
+                     <div col-4>
+                        <a asp-action="Index" class="btn " style="; border-radius:8px">Back to List</a>
+                    </div>
+
+                    <div col-4>
+                        <input type="submit" value="Create    " class="btn"  style="; border-radius:8px"/>
+                    </div>
+                   
+                </div>
           </div>
           </form>
-        </div>
-        
-      </div>
-    </div>
-  </div>
+    </div> 
+</body>
+
+
+ 
+    
+ 
   
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>

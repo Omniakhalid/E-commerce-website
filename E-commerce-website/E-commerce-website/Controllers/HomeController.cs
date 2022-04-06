@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace E_commerce_website.Controllers
 {
@@ -16,17 +17,21 @@ namespace E_commerce_website.Controllers
     {
         // private readonly ILogger<HomeController> _logger;
         private readonly OnlineshoppingContext _context;
+        private readonly bool _contextAccessor;
 
-        public HomeController(OnlineshoppingContext context)
+        public HomeController(OnlineshoppingContext context, IHttpContextAccessor contextAccessor)
         {
             // _logger = logger;
             _context = context;
+            _contextAccessor = contextAccessor.HttpContext.User.IsInRole("Vendor");
 
         }
 
         public async Task<IActionResult> Index()
         {
             var onlineshoppingContext = _context.Products;
+        /*    if (!_contextAccessor)
+                return RedirectToRoute("ProductArea/Products/Index");*/
             return View(await onlineshoppingContext.ToListAsync());
             //return View();
         }
