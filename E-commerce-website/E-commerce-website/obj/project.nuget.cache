@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "P2N1ekvSGzR8atBfjI7PTBpo7lrifDFOqpBRfyy9Rcr3fFuFETABnfahJJntpNk4e5GBhHaeo6EvnkOwIhQ7bA==",
+  "dgSpecHash": "OY9yAlOyuYStxWW3IlSbONUfBttcCQoQAKIk293ScnX30LJ4JEgtoLQ7e0gajZ00pwYiuXQPNEmWtwnOX47lNg==",
   "success": true,
   "projectFilePath": "G:\\iti\\MVC\\project\\E-commerce-website\\E-commerce-website\\E-commerce-website\\E-commerce-website.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\efcore.schemacompare\\5.1.3\\efcore.schemacompare.5.1.3.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.authentication.facebook\\5.0.10\\microsoft.aspnetcore.authentication.facebook.5.0.10.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\5.0.10\\microsoft.aspnetcore.authentication.google.5.0.10.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.15\\microsoft.aspnetcore.cryptography.internal.5.0.15.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.15\\microsoft.aspnetcore.cryptography.keyderivation.5.0.15.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
