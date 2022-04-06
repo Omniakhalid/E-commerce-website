@@ -122,34 +122,34 @@
 
                   @foreach(var item in Model){
                       <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
+                      <div class="box">
+                        <a href="">
                 
-                      <div class="img-box">
-                          <a asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID>
+                                  <div class="img-box">
+                                      <a asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID>
 
-                                <img src= "~/dbImages/@item.ProductImage" alt="">
+                                            <img src= "~/dbImages/@item.ProductImage" alt="">
+                                      </a>
+                          </div>
+                          <div class="detail-box">
+                            <h6>
+                              @item.ProductName
+                            </h6>
+                            <h6>
+                              Price
+                              <span>
+                               @item.ProductPrice EGP
+                              </span>
+                            </h6>
+                          </div>
+                          <div class="new">
+                            <span>
+                              New
+                            </span>
+                            <a  asp-area="ClientArea" asp-controller="Cart" asp-action="AddItemsIntoCart"  asp-route-id=@item.ProductID> <i class="fa fa-cart-plus"></i></a>
+                          </div>
                           </a>
-              </div>
-              <div class="detail-box">
-                <h6>
-                  @item.ProductName
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                   @item.ProductPrice EGP
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-                <a  asp-area="ClientArea" asp-controller="Cart" asp-action="AddItemsIntoCart"  asp-route-id=@item.ProductID> <i class="fa fa-cart-plus"></i></a>
-              </div>
-              </a>
-          </div>
+                      </div>
         </div>
               }
 

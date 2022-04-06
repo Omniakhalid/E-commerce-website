@@ -16,7 +16,7 @@ namespace E_commerce_website.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.15")
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("E_commerce_website.Areas.Identity.Data.websiteUser", b =>
@@ -88,9 +88,6 @@ namespace E_commerce_website.Migrations
 
                     b.Property<string>("UserPhone")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Userimage")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("type")
                         .HasColumnType("int");
