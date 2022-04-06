@@ -127,8 +127,9 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        if (Input.type==UserType.Vendor)
+                        if (Input.type == UserType.Vendor)
                         {
+                            await this._userManager.AddToRoleAsync(user, "Vendor");
                             _context.Add(new Vendor()
                             {
                                 VendorName = Input.UserFirstName,
@@ -138,12 +139,12 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
                                 VendorCity = Input.UserCity,
                                 VendorCountry = "EGYPT",
                                 VendorPassword = Input.Password
-                            }) ;
+                            });
                             _context.SaveChanges();
                         }
                         else if (Input.type == UserType.User)
                         {
-                           // await _userManager.AddToRoleAsync(user, UserType.User.ToString());
+                            await this._userManager.AddToRoleAsync(user, "User");
 
                             var User = new User()
                             {
@@ -161,8 +162,13 @@ namespace E_commerce_website.Areas.Identity.Pages.Account
                         }
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
+                    else if (Input.type == UserType.Vendor)
+                    {
+                        await this._userManager.AddToRoleAsync(user, "Admin");
+                    }
                     else
                     {
+                        
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
