@@ -1,13 +1,20 @@
-﻿@model IEnumerable<E_commerce_website.Models.Product>
+﻿@using System.Collections
+@using Microsoft.AspNetCore.Http
+@using static System.Net.WebRequestMethods
+@model IEnumerable<E_commerce_website.Models.Product>
 @{
     ViewData["Title"] = "Home Page";
+    List<ProductCategory> CategoryList = ViewBag.categories;
+
 }
 
-<link rel="stylesheet" href="~/css/CartStyle.css"> 
+    <link rel="stylesheet" href="~/css/CartStyle.css"> 
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css'>
+    <link rel="stylesheet" href="~/css/styles.css">
 
 
 <body>
-  <div class="hero_area">
+
     <!-- header section strats -->
   
     <!-- end header section -->
@@ -17,8 +24,6 @@
       <div class="slider_container">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
-            <div class="carousel-item active">
-
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-7">
@@ -71,276 +76,135 @@
                 </div>
               </div>
             </div>
-               
            }
 
-
-            @*<div class="carousel-item ">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-7">
-                    <div class="detail-box">
-                      <h1>
-                        Welcome To Our <br>
-                        Gift Shop
-                      </h1>
-                      <p>
-                        Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
-                      </p>
-                      <a href="">
-                        Contact Us
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-5 ">
-                    <div class="img-box">
-                      <img src="images/slider-img.png" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>*@
-          </div>
-        </div>
       </div>
+      </div>
+     
     </section>
-
+    
     <!-- end slider section -->
-  </div>
-  <!-- end hero area -->
+     @await Html.PartialAsync("showProductsByCategoryID",CategoryList)
+    <!-- end hero area -->
 
   <!-- shop section -->
 
-  <section class="shop_section layout_padding">
+
+                                  @* START Partial View here for products  *@
+                  
+
+     @section Scripts{
+			                <script>
+                                    var img = "";
+					                function GetProduct(){
+						                console.log($("#category").val());
+                                        var CategoryID=$("#category").val();
+                                        //var CategoryName=$("#category").val().CategoryName;
+                                        $("#productCard").html("");
+                                        $.ajax(
+                                            {
+                                                url:"/Home/getProductbyId",
+                                                data:{"CategoryID":CategoryID},
+                                                success:function(result){
+                                                    for(let i=0; i<result.length;i++){
+                                                    console.log(result[i].productName);
+                                                    img = result[i].productImage;
+                                                    console.log(result);
+                                                    var id = result[i].productID;
+                                                    console.log(result[i]);
+                                                   $("#productCard").append(`
+                                       <div class="col-md-3">
+                                        <div class="wsk-cp-product">
+                                          <div class="wsk-cp-img">
+                                        <div class="img-box">
+                                        <a href="ClientArea/Products/Details/${id}" >
+                                            <img src="/dbImages/${img}" />
+                                        </a>
+                                          </div>                     
+                                          </div>
+                                          <div class="wsk-cp-text">
+            
+                                            <div class="title-product">
+                                              <h3>${result[i].productName}</h3>
+                                            </div>
+           
+                                            <div class="card-footer">
+                                              <div class="wcf-left"><span class="price" style="padding-left: 10px;"> Price :${result[i].productPrice} EGP</span></div>
+                                              <br><br>
+                                        <a href="ClientArea/Cart/AddItemsIntoCart/${result[i].productID}" class="btn btn-primary btn-lg" >
+                                            Add To Cart <i class="fa fa-cart-plus"></i>
+                                        </a>                                   
+                                        </div>
+                                       </div>
+                                      </div>
+                                     </div>
+                                     `
+                                     )
+                                }
+                            }
+                        }
+                    )
+				}
+			                </script>
+}
+
+                                        
+  <section class="shop_section layout_padding bg-light">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
           Latest Products
         </h2>
       </div>
-      <div class="row">
+      <div class="row" id="productCard">
+         
+                          @foreach(var item in Model){
+                                      <div class="col-md-3">
+                                        <div class="wsk-cp-product">
+                                          <div class="wsk-cp-img">
+                                        <div class="img-box">
 
-                  @foreach(var item in Model){
-                      <div class="col-sm-6 col-md-4 col-lg-3">
-                      <div class="box">
-                        <a href="">
-                
-                                  <div class="img-box">
-                                      <a asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID>
+                                          <a asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID>
 
-                                            <img src= "~/dbImages/@item.ProductImage" alt="">
-                                      </a>
-                          </div>
-                          <div class="detail-box">
-                            <h6>
-                              @item.ProductName
-                            </h6>
-                            <h6>
-                              Price
-                              <span>
-                               @item.ProductPrice EGP
-                              </span>
-                            </h6>
-                          </div>
-                          <div class="new">
-                            <span>
-                              New
-                            </span>
-                            <a  asp-area="ClientArea" asp-controller="Cart" asp-action="AddItemsIntoCart"  asp-route-id=@item.ProductID> <i class="fa fa-cart-plus"></i></a>
-                          </div>
-                          </a>
-                      </div>
-        </div>
-              }
+                                                <img src= "~/dbImages/@item.ProductImage" alt="">
+                                          </a>
 
-
+                                          </div>                     
+                                          </div>
+                                          <div class="wsk-cp-text">
             
+                                            <div class="title-product">
+                                              <h3>@item.ProductName</h3>
+                                            </div>
+           
+                                            <div class="card-footer">
+                                              <div class="wcf-left"><span class="price" style="padding-left: 10px;"> Price :@item.ProductPrice EGP</span></div>
+                                              <br><br>
 
+                                       <a  class="btn btn-primary btn-lg" asp-area="ClientArea" asp-controller="Cart" asp-action="AddItemsIntoCart"  asp-route-id=@item.ProductID >
+                                           Add To Cart <i class="fa fa-cart-plus"></i>
+                                       </a>   
+
+                                        </div>
+                                       </div>
+                                      </div>
+                                     </div>
+                                     }
+                          </div>
+                         </div>
+             </section>
+
+
+
+                                 @* END   Partial View here for products  *@
         
-        @*<div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Watch
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Teddy Bear
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p4.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Flower Bouquet
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $45
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p5.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Teddy Bear
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $95
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p6.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Flower Bouquet
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $70
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p7.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Watch
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $400
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p8.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $450
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>*@
+      
 
-      </div>
       <div class="btn-box">
         <a href="">
-          View All Products
+          <button type="button" class="btn btn-primary btn-lg btn-block">View All Products</button>
         </a>
       </div>
-    </div>
-  </section>
 
   <!-- end shop section -->
 

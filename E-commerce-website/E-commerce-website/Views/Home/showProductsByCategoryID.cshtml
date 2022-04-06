@@ -1,0 +1,16 @@
+﻿@model List<E_commerce_website.Models.ProductCategory>
+@{
+	 SelectList categoryList = new SelectList(Model,"CategoryID","CategoryName");
+	//List<ProductCategory> productCategories = Model;
+	}
+
+	<form method="post" action="#">
+
+
+	<select name="category" id="category" asp-items="categoryList" class="form-control mt-5" onchange="GetProduct()" >
+		<option value="0"> Chose Category </option>
+	</select>
+
+
+
+	</form>

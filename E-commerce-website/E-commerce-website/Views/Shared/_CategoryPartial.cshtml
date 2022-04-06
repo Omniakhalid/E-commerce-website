@@ -1,0 +1,29 @@
+﻿@using E_commerce_website.Models
+@model IEnumerable<ProductCategory>
+
+
+@*    <form method="get" action="~/Home/productListPartial">*@
+
+	    <div class="list-group" style="position:absolute;right:2%;">
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+        The current link item
+      </a>
+                @foreach (var item in Model)
+                {
+                   @Html.ActionLink(@item.CategoryName,"Index","Home",new{@item.CategoryID},new{@class = "list-group-item list-group-item-action"})
+
+
+                    @*<input type="hidden" id="Productid" name="Productid" value="@item.CategoryName">*@
+        @*        
+                @section Scripts{
+                                   <script>
+                                        function getProducts(){
+                                           console.log("ggg");
+                                        }
+                                   </script>
+                               }*@
+
+
+
+                }
+    </div>

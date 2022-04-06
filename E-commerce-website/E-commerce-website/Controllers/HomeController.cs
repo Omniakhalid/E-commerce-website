@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace E_commerce_website.Controllers
 {
@@ -17,24 +16,63 @@ namespace E_commerce_website.Controllers
     {
         // private readonly ILogger<HomeController> _logger;
         private readonly OnlineshoppingContext _context;
-        private readonly bool _contextAccessor;
 
-        public HomeController(OnlineshoppingContext context, IHttpContextAccessor contextAccessor)
+        public HomeController(OnlineshoppingContext context)
         {
             // _logger = logger;
             _context = context;
-            _contextAccessor = contextAccessor.HttpContext.User.IsInRole("Vendor");
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var onlineshoppingContext = _context.Products;
-        /*    if (!_contextAccessor)
-                return RedirectToRoute("ProductArea/Products/Index");*/
+            var onlineshoppingContext = _context.Products.Include(c => c.ProductCategory);
+
+            var mylist = _context.ProductCategories.Where(c=>c.CategoryName != null).ToList();
+            ViewBag.categories = mylist;
+            ViewBag.categories2 = new SelectList(_context.ProductCategories.ToList(), "CategoryID", "CategoryName");
             return View(await onlineshoppingContext.ToListAsync());
             //return View();
         }
+
+
+
+        [HttpPost]
+        public ActionResult Index(int CategoryID)
+        {
+            SelectList items = new SelectList(_context.ProductCategories.ToList(), "CategoryID", "CategoryName");
+            ViewBag.categories2 = items;
+            return View(_context.Products.Where(c => c.ProductCategoryID == CategoryID).ToList());
+        }
+
+
+
+
+
+        public IActionResult showProductsByCategoryID()
+        {
+            return PartialView("showProductsByCategoryID", _context.ProductCategories.ToList());
+        }
+
+        public IActionResult getProductbyId(int? CategoryID)
+        {
+            if (CategoryID != null)
+            {
+                var productList = _context.Products
+                                          //.OrderByDescending(x => x.ProductID)
+                                          .Where(x => x.ProductCategoryID == CategoryID)
+                                          .ToList();
+                return Json(productList);
+            }
+            else
+            {
+                var productList = _context.Products
+                                          .OrderByDescending(x => x.ProductID)
+                                          .ToList();
+                return Json(productList);
+            }
+        }
+
 
         public IActionResult Privacy()
         {

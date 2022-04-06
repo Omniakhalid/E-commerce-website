@@ -12,6 +12,8 @@ using E_commerce_website.Areas.Identity.Data;
 using E_commerce_website.Repositories;
 using E_commerce_website.Areas.ClientArea.Services;
 using E_commerce_website.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using E_commerce_website.Confirmation;
 
 namespace E_commerce_website
 {
