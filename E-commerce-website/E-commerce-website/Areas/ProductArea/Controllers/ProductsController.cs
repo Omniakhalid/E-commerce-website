@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using E_commerce_website.Areas.ProductArea.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using E_commerce_website.Areas.ProductArea.Repositories;
 
 namespace E_commerce_website.Areas.ProductArea.Controllers
 {
@@ -20,58 +21,30 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
         private readonly OnlineshoppingContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IHttpContextAccessor _contextAccessor;
+        private IProductRepository _productRepository;
+        private IOptionsRepository _optionsRepository;
+        private IOrdersRepository _ordersRepository;
         private readonly string _vendor;
-        public ProductsController(OnlineshoppingContext context, IWebHostEnvironment hostEnvironment, IHttpContextAccessor contextAccessor)
+        public ProductsController(OnlineshoppingContext context,
+            IWebHostEnvironment hostEnvironment, IHttpContextAccessor contextAccessor,
+            IProductRepository productRepository, IOptionsRepository optionsRepository
+            , IOrdersRepository ordersRepository)
         {
             _context = context;
             webHostEnvironment = hostEnvironment;
             _contextAccessor = contextAccessor;
+            _productRepository = productRepository;
+            _optionsRepository = optionsRepository;
+            _ordersRepository = ordersRepository;
             _vendor = _contextAccessor.HttpContext.User.Identity.Name;
-
         }
 
         // GET: ProductArea/Products
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var vendorProducts = _context.Products.Where(c => c.Vendor.VendorEmail == _vendor)
-                                                    .Include(p => p.ProductCategory)
-                                                    .Include(p => p.Vendor);
-            return View(await vendorProducts.ToListAsync());
+            return View(_productRepository.GetAll(_vendor));
         }
 
-        // GET: ProductArea/Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .Include(p => p.ProductCategory)
-                .Include(p => p.Vendor)
-               
-                .FirstOrDefaultAsync(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-        public async Task<IActionResult> GetOrders()
-        {
-            var onlineshoppingContext = (from o in _context.Orders
-                                         from od in _context.OrderDetails
-                                         from p in _context.Products
-                                         from v in _context.Vendors
-                                         where o.OrderID == od.OrderID
-                                         && od.ProductID == p.ProductID
-                                         && p.VendorID == v.VendorID
-                                         && v.VendorEmail == _vendor
-                                         select o);
-            return View(await onlineshoppingContext?.ToListAsync());
-        }
         // GET: ProductArea/Products/Create
         public IActionResult Create()
         {
@@ -81,14 +54,58 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
         }
 
         // POST: ProductArea/Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,ProductName,ProductPrice,ProductWeight,ProductShortDes,ProductLongDes,ProductImage,ProductCategoryID,ProductUpdateDate,ProductStock,VendorID")] Product product,ProductViewModel productViewModel)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ProductViewModel productViewModel)
         {
-            //if (ModelState.IsValid)
-            if(productViewModel.ProductName!=null)
+            string wwwRootPath = webHostEnvironment.WebRootPath;//GUID
+            string fileName = Path.GetFileNameWithoutExtension(productViewModel.ProductImageFile.FileName);
+            string extension = Path.GetExtension(productViewModel.ProductImageFile.FileName);
+            productViewModel.ProductImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            string path = Path.Combine(wwwRootPath + "/dbImages/", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await productViewModel.ProductImageFile.CopyToAsync(fileStream);
+            }
+            _productRepository.Add(productViewModel);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: ProductArea/Products/Details/5
+        public IActionResult Details(int id)
+        {
+            Product product = _productRepository.GetById(id);
+            return View(product);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _productRepository.Remove(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: ProductArea/Products/Edit/5
+        public IActionResult Edit(int id)
+        {
+            ProductViewModel productViewModel = new ProductViewModel();
+            var product = _productRepository.GetById(id);
+            productViewModel.ProductName = product.ProductName;
+            productViewModel.ProductPrice = product.ProductPrice;
+            productViewModel.ProductLongDes = product.ProductLongDes;
+            productViewModel.ProductShortDes = product.ProductShortDes;
+            productViewModel.ProductStock = product.ProductStock;
+            productViewModel.ProductWeight = product.ProductWeight;
+            productViewModel.ProductImage = product.ProductImage;
+            productViewModel.ProductUpdateDate = product.ProductUpdateDate;
+            productViewModel.VendorID = product.VendorID;
+            productViewModel.ProductCategoryID = product.ProductCategoryID;
+            ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
+            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
+            return View(productViewModel);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, ProductViewModel productViewModel)
+        {
+            try
             {
                 string wwwRootPath = webHostEnvironment.WebRootPath;//GUID
                 string fileName = Path.GetFileNameWithoutExtension(productViewModel.ProductImageFile.FileName);
@@ -99,148 +116,34 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
                 {
                     await productViewModel.ProductImageFile.CopyToAsync(fileStream);
                 }
-                Product prod = new Product
-                {
-                    ProductID = productViewModel.ProductID,
-                    ProductName = productViewModel.ProductName,
-                    ProductPrice= (decimal)productViewModel.ProductPrice,
-                    ProductLongDes=productViewModel.ProductLongDes,
-                    ProductShortDes=productViewModel.ProductShortDes,
-                    ProductStock=productViewModel.ProductStock,
-                    ProductWeight=productViewModel.ProductWeight,
-                    ProductImage=productViewModel.ProductImage,
-                    ProductUpdateDate=productViewModel.ProductUpdateDate,
-                    VendorID=productViewModel.VendorID,
-                    ProductCategoryID = productViewModel.ProductCategoryID
+                _productRepository.Update(id, productViewModel);
 
-                };
-                _context.Add(prod);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", productViewModel.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", productViewModel.VendorID);
-            return View();
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        private bool ProductExists(int id)
+        {
+            return _context.Products.Any(e => e.ProductID == id);
+        }
+        public IActionResult GetOrders()
+        {
+            return View(_ordersRepository.GetAll(_vendor));
         }
         public IActionResult Options()
         {
-            var vendorProducts = _context.Products.Where(c => c.Vendor.VendorEmail == _vendor)
-                                                    .Include(p => p.ProductCategory)
-                                                    .Include(p => p.Vendor);
-            ViewData["ProductID"] = new SelectList(vendorProducts, "ProductID", "ProductName");
+            ViewData["ProductID"] = new SelectList(_productRepository.GetAll(_vendor), "ProductID", "ProductName");
             ViewData["OptionGroupID"] = new SelectList(_context.OptionGroups, "OptionGroupID", "OptionGroupName");
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Options([Bind("OptionID,OptionName, OptionGroupID")] Option option, OptionViewModel optionViewModel)
+        public IActionResult Options(OptionViewModel optionViewModel)
         {
-            Option op = new Option
-            {
-                OptionID = optionViewModel.OptionID,
-                OptionName = optionViewModel.OptionName,
-                OptionGroupID = optionViewModel.OptionGroupID,
-            };
-            ProductOption productOption = new ProductOption()
-            {
-                OptionID = optionViewModel.OptionID,
-                ProductID = optionViewModel.ProductID,
-                id = optionViewModel.id
-            };
-            _context.Add(op);
-            _context.Add(productOption);
-            await _context.SaveChangesAsync();
-            return View();
-        }
+            _optionsRepository.Add(optionViewModel);
+            return RedirectToAction(nameof(Options));
 
-        // GET: ProductArea/Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
-            return View(product);
-        }
-
-        // POST: ProductArea/Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,ProductName,ProductPrice,ProductWeight,ProductShortDes,ProductLongDes,ProductImage,ProductCategoryID,ProductUpdateDate,ProductStock,VendorID")] Product product)
-        {
-            if (id != product.ProductID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.ProductID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName", product.ProductCategoryID);
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName", product.VendorID);
-            return View(product);
-        }
-
-        // GET: ProductArea/Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .Include(p => p.ProductCategory)
-                .Include(p => p.Vendor)
-                .FirstOrDefaultAsync(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // POST: ProductArea/Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.ProductID == id);
         }
     }
 }
