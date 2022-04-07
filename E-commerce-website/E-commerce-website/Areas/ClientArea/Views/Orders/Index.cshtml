@@ -1,4 +1,4 @@
-﻿@model IEnumerable<E_commerce_website.Models.Order>
+﻿ @model IEnumerable<E_commerce_website.Models.Order>
 
 <link rel="stylesheet" href="~/css/CartStyle.css"> 
 
@@ -6,7 +6,7 @@
 <body style="background-color:white">
      
 <div class="container">
-        <div class="heading_container heading_center">
+        <div class="heading_container heading_center" style="margin:60px">
         <h2>
             Order History
         </h2>
@@ -14,31 +14,37 @@
       
 
     @foreach(var item in Model){
-        <div class="card mt-3">
+        <div class="card mt-3" style="width:700px">
             <div class="card-header">
-            Order at Day @item.OrderDate
+            Date : @item.OrderDate
             </div>
             <div class="card-body">
                         @foreach(var order in item.OrderDetails)
                             {
                                 <div class="row">
                                     <div class="col-5">
-                                        <div class="row">
+                                        <div class="row" style="margin-left:35px;margin-top:30px;font-family:Garamond;font-size:15px">
                                             <div class="col-10">
-                                                <span class="text-muted" style="font:xx-large">Product @order.ProductName </span>
+                                                <p  style="color:black">Product : @order.ProductName </p>
                                              </div>
                                              <br/>
                                              <div class="col-10">
-                                               <p style="font:large">Quantity: <span style="font:medium"> @order.Quanity </span></p>
+                                               <p style="font:large">Quantity: <span style="font:medium;"> @order.Quanity </span></p>
                                              </div>
+                                             <div class="col-10">
+                                              <p>Total Price @item.OrderAmount</p>
+                                              </div>
                                          </div>
                                     </div>
                                      <div class="col-5">
-                                        <img class="card-img" style="float:right;width:50%" src="~/dbImages/@order.Product.ProductImage"/>
+                                        <img class="card-img" style="float:right;width:70%" src="~/dbImages/@order.Product.ProductImage"/>
                                     </div>
                                 </div>
+                                <br />
+                                <hr />
+                                <br />
                             }
-                        <p>Total Price @item.OrderAmount</p>
+                       
             </div>
         </div>
     }
@@ -46,5 +52,3 @@
     </div>  
       
 </body>
-
-

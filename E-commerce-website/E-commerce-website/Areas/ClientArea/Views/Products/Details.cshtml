@@ -1,5 +1,6 @@
 ﻿@using E_commerce_website.Models;
 @model E_commerce_website.Models.Product
+
 @{
     ViewData["Title"] = "Details";
     var Options = ViewBag.ProductOptions;
@@ -19,7 +20,7 @@
 </head>
 <div>
  
-    <form action="#" method="get">
+    <form asp-action="AddItemsOptionsIntoCart" asp-controller="Cart" asp-area="ClientArea"  method="post">
 
 
          <input type="hidden" id="Productid" name="Productid" value="@Model.ProductID">
@@ -60,7 +61,7 @@
 
                     
                     <div class="btn-bar">
-                        <button class="px-btn theme btn-danger" type="submit">Add to cart</button>
+                        <button  class="px-btn theme btn-danger" type="submit">Add to cart</button>
                         <a class="px-btn theme-t" href="~/Home/index">Back to Home</a>
                     </div>
                 </div>

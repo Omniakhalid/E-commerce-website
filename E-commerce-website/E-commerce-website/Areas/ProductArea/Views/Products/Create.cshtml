@@ -15,16 +15,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/CartStyle.css"> 
 </head>
-
+<h4>Add New Product</h4>
+<hr />
 <body>
     <div class="cart col-md-8">
-           <div class="title">
-                <div class="row">
-                        <h1><b>Add New Product</b></h1>
-                    
-                </div>
-            </div>
-          <form asp-action="Create"  enctype="multipart/form-data"  style="">
+          
+          <form asp-action="Create"  enctype="multipart/form-data"  style="font-size:15px">
             <div class="form-group">
                 <label asp-for="ProductName">Product Name</label>
               <input asp-for="ProductName" type="text" class="form-control" style="">
@@ -86,11 +82,11 @@
             <div class="form-group">
                 <div class="row justify-content-between">
                      <div col-4>
-                        <a asp-action="Index" class="btn " style="; border-radius:8px">Back to List</a>
+                        <a asp-action="Index" class="btn " style="font-size:15px;border-radius:5px">Back to List</a>
                     </div>
 
                     <div col-4>
-                        <input type="submit" value="Create    " class="btn"  style="; border-radius:8px"/>
+                        <input type="submit" value="Create    " class="btn"  style="font-size:15px;border-radius:5px"; border-radius:8px"/>
                     </div>
                    
                 </div>
