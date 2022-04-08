@@ -32,7 +32,7 @@ namespace E_commerce_website
             services.AddControllersWithViews();
 
             services.AddHttpContextAccessor();
-            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("myConn")));
            
             
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -40,7 +40,9 @@ namespace E_commerce_website
             #region Repository DI
 
             // Products
-            services.AddScoped<IProductRepository, ProductRepository>();
+                services.AddScoped<Areas.ProductArea.Repositories.IProductRepository, Areas.ProductArea.Repositories.ProductRepository>();
+                
+                services.AddScoped<IProductRepository, ProductRepository>();
                 services.AddScoped<IProductOptionRepository, ProductOptionRepository>();
                 services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
 
@@ -49,12 +51,15 @@ namespace E_commerce_website
                 services.AddScoped<ICartItemsOptionRepository, CartItemsOptionRepository>();
 
                 // Order
+                services.AddScoped<Areas.ProductArea.Repositories.IOrdersRepository, Areas.ProductArea.Repositories.OrdersRepository>();
+                
                 services.AddScoped<IOrdersRepository, OrdersRepository>();
                 services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
                 services.AddScoped<IOrderItemsOptionRepository, OrderItemsOptionRepository>();
 
                 //Option
-
+                services.AddScoped<Areas.ProductArea.Repositories.IOptionsRepository, Areas.ProductArea.Repositories.OptionsRepository>();
+                
                 services.AddScoped<IOptionRepository, OptionRepository>();
                 services.AddScoped<IOptionGroupRepository, OptionGroupRepository>();
                 

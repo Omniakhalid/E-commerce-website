@@ -1,5 +1,4 @@
-﻿@model E_commerce_website.Models.Product
-
+﻿@model E_commerce_website.Areas.ProductArea.ViewModels.ProductViewModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -27,8 +26,8 @@
           </button>
         </div>
         <div class="modal-body">
-       <form asp-action="Edit" style="font-size:13px;color:gray">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       <form asp-action="Edit" asp-controller="Products" method="post" enctype="multipart/form-data" style="font-size:13px;color:gray">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="ProductID" style="font-size:13px"/>
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
@@ -55,10 +54,15 @@
                 <input asp-for="ProductLongDes" class="form-control" style="font-size:13px"/>
                 <span asp-validation-for="ProductLongDes" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="ProductImage" class="control-label"></label>
                 <input asp-for="ProductImage" class="form-control" style="font-size:13px"/>
                 <span asp-validation-for="ProductImage" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="ProductImageFile" class="control-label"></label>
+                <input type="file" accept="image/*" asp-for="ProductImageFile" class="form-control"  style=""/>
+                <span asp-validation-for="ProductImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProductCategoryID" class="control-label"></label>
