@@ -12,6 +12,7 @@ using E_commerce_website.Areas.ProductArea.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using E_commerce_website.Areas.ProductArea.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_website.Areas.ProductArea.Controllers
 {

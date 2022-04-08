@@ -32,7 +32,7 @@ namespace E_commerce_website
             services.AddControllersWithViews();
 
             services.AddHttpContextAccessor();
-            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("myConn")));
+            services.AddDbContext<OnlineshoppingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
            
             
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
