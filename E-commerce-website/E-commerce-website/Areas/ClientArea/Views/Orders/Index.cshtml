@@ -14,14 +14,11 @@
       
 
     @foreach(var item in Model){
-        <div class="card mt-3" style="width:700px">
+        <div class="card mt-3" >
             <div class="card-header">
                 
             Date : @item.OrderDate
-            <div style="float:right;"> 
-                       <a asp-action="Delete" asp-controller="Orders" asp-route-id= item.itemid> <i class="fa fa-solid fa-delete-left fa-lg"></i> </a>
-
-            </div>
+            
             </div>
             <div class="card-body">
                         @foreach(var order in item.OrderDetails)

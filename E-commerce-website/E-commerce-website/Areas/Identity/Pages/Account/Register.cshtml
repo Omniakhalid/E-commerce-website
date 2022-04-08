@@ -54,7 +54,7 @@
                 <input asp-for="Input.UserAddress" class="form-control" />
                 <span asp-validation-for="Input.UserAddress" class="text-danger"></span>
             </div>
-           <select asp-for="Input.type" asp-items="Html.GetEnumSelectList<UserType>()" class ="form-control mb-5" >
+           <select asp-for="Input.type" asp-items="Html.GetEnumSelectList<UserType>().SkipLast(1)" class ="form-control mb-5" >
                
            </select>
             <button type="submit" class="btn btn-primary">Register</button>
