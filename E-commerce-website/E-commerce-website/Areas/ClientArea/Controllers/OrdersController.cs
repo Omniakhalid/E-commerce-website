@@ -15,7 +15,7 @@ using E_commerce_website.Services;
 namespace E_commerce_website.Areas.ClientArea.Controllers
 {
     [Area("ClientArea")]
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class OrdersController : Controller
     {
         private readonly IHttpContextAccessor _contextAccessor;
@@ -76,16 +76,21 @@ namespace E_commerce_website.Areas.ClientArea.Controllers
             }
         }
 
-      
 
-        // POST: ClientArea/Orders/Edit/5
+    /*    [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]*/
+        public IActionResult Delete(int id)
+        {
+            _orderService.Remove(id);
+            return RedirectToAction(nameof(Index));
+        }
 
 
- 
-
-      
 
 
-        
+
+
+
+
     }
 }

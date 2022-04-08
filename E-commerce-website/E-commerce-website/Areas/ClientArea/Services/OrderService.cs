@@ -24,9 +24,9 @@ namespace E_commerce_website.Areas.ClientArea.Services
             _cartService = cartService;
             _orderItemsOptionService = orderItemsOptionService;
         }
-        private void InsertCartIemsDetails(int orderID)
+        private void InsertCartIemsDetails(int orderID, int userID)
         {
-            var Cart = _cartService.GetAll(orderID);
+            var Cart = _cartService.GetAll(userID);
 
             foreach (var item in Cart)
             {
@@ -67,14 +67,18 @@ namespace E_commerce_website.Areas.ClientArea.Services
      
         public void Add(Order order)
         {
+            order.OrderAmount = _cartService.GetAll(order.UserID).Sum(c => c.TotalPrice);
+
             _orderRepo.Add(order);
-            InsertCartIemsDetails(order.OrderID);
+            InsertCartIemsDetails(order.OrderID,order.UserID);
             AddOrderOptions(order.OrderID, order.UserID);
             _cartService.RemoveRange(order.UserID);
+            _cartOptionsService.RemoveRange(order.UserID);
         }
 
         public List<Order> GetAll(int userId)
         {
+           
             return _orderRepo.GetAll().FindAll(c=>c.UserID == userId).ToList();
         }
 
@@ -85,7 +89,9 @@ namespace E_commerce_website.Areas.ClientArea.Services
 
         public void Remove(int orderId)
         {
-             _orderRepo.Remove(orderId);
+            _orderDetailService.RemoveRange(orderId);
+            _orderItemsOptionService.RemoveRange(orderId);
+            _orderRepo.Remove(orderId);
         }
 
 

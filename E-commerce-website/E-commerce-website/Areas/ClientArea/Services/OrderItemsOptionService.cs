@@ -36,5 +36,10 @@ namespace E_commerce_website.Areas.ClientArea.Services
         {
             _orderOptionsRepo.Remove(optionId,userId, productId);
         }
+
+        public void RemoveRange(int orderId)
+        {
+            _orderOptionsRepo.RemoveRange(orderId);
+        }
     }
 }

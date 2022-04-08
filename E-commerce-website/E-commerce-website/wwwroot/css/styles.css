@@ -9,13 +9,13 @@ body {
 .wsk-cp-product{
 
   background:#fff;
-  padding:15px;
+ /* padding:15px;*/
   border-radius:6px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   position:relative;
-  margin:20px auto;
+ /* margin:20px auto;
   margin-left:5px;
-  margin-right:5px;
+  margin-right:5px;*/
 }
 .wsk-cp-img{
   position:absolute;
@@ -43,12 +43,17 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.30), 0 6px 6px rgba(0,0,0,0.22);
 }
 .wsk-cp-text{
-  padding-top:110%;
+  padding-top:120%;
 }
 .circle-icon {
-    background: #F7F9F9;
+   
     padding: 10px;
+    margin:auto;
     border-radius: 50%;
+    
+}
+i {
+    color: black;
 }
 .wsk-cp-text .category{
   text-align:center;
@@ -91,11 +96,12 @@ body {
 }
 .wsk-cp-text .title-product{
   text-align:center;
+  padding:5%;
 }
 .wsk-cp-text .title-product h3{
   font-size:20px;
   font-weight:bold;
-  margin:15px auto;
+  margin:25px auto;
   overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -11,27 +11,37 @@
     <link rel="stylesheet" href="~/css/responsive.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        #myFont{
+            font-family: 'Lobster', cursive;
+            font-family: 'Pacifico', cursive;
+        }
+    </style>
 </head>
 <body style="background-color:white">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="font-size:18px">
-            <div class="container">
-                <a class="navbar-brand " style="font-family:fantasy;font:400px" asp-area="" asp-controller="Home" asp-action="Index"> SHOPIFY</a>
+            <div class="container d-flex justify-content-between">
+                <a class="navbar-brand " id="myFont" asp-area="" asp-controller="Home" asp-action="Index"> <h1 style="color:deeppink">SHOPIFY</h1></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex ">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                   <ul class="navbar-nav flex-grow-1">
+                        
+                      @*  <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Shope</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Why Us</a>
-                        </li>
+                        </li>*@
                           
                     </ul>
           

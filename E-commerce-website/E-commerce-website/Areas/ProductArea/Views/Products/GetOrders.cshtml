@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<E_commerce_website.Models.Order>
+<link rel="stylesheet" href="css/style.css">
 
-@{
-    ViewData["Title"] = "GetOrders";
-    Layout = "~/Areas/ProductArea/Views/Shared/_Layout.cshtml";
-}
+<link rel="stylesheet" href="~/css/styles.css">
  <div class="container">
+     <div class="mb-3">
 
+            <h2> All Orders </h2>
+            <br/>
+     </div>
 <table class="table">
     <thead>
-        <tr>
+        <tr class="table-Secondary">
             <th>
                 @Html.DisplayNameFor(model => model.OrderAmount)
             </th>
@@ -18,9 +20,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.OrderStatus)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.OrderTrakingNumber)
             </th>
@@ -37,9 +39,17 @@
                 @Html.DisplayNameFor(model => model.OrderEmail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.User.UserEmail)
             </th>
-            <th></th>
+            <th>
+                 
+            </th>
+            <th>
+                  
+            </th>
+             <th>
+                  
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -54,9 +64,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.OrderStatus)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.OrderTrakingNumber)
             </td>
@@ -76,10 +86,19 @@
                 @Html.DisplayFor(modelItem => item.User.UserAddress)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
+               
+                 <a  asp-action="Edit" asp-route-id="@item.OrderID"><i class="fa  fa-edit circle-icon"></i></a> 
+                 </td>
+            <td>
+
+                <a  asp-action="Details" asp-route-id="@item.OrderID"><i class="fa  fa-pencil circle-icon"></i></a> 
             </td>
+            <td>
+
+                <a  asp-action="Delete" asp-route-id="@item.OrderID"><i class="fa fa-trash circle-icon"></i></a>
+            </td>
+
+            
         </tr>
 }
     </tbody>

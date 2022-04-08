@@ -15,7 +15,7 @@ using E_commerce_website.Services;
 
 namespace E_commerce_website.Areas.ClientArea.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     [Area("ClientArea")]
     public class CartController : Controller
     {

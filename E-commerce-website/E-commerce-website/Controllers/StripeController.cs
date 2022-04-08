@@ -14,7 +14,7 @@ namespace E_commerce_website.Controllers
 
         public IActionResult Charge(string stripeEmail, string stripeToken)
         {
-            var customers = new CustomerService();
+          /*  var customers = new CustomerService();
             var charges = new ChargeService();
 
             var customer = customers.Create(new CustomerCreateOptions
@@ -29,9 +29,9 @@ namespace E_commerce_website.Controllers
                 Description = "Sample Charge",
                 Currency = "usd",
                 Customer = customer.Id
-            });
+            });*/
 
-            return View();
+            return RedirectToAction("Checkout", "Orders", new { area = "ClientArea" });
         }
         //Previous actions
 

@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Hosting;
 using E_commerce_website.Areas.ProductArea.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_website.Areas.ProductArea.Controllers
 {
     [Area("ProductArea")]
+    [Authorize(Roles = "Vendor")]
     public class ProductsController : Controller
     {
         private readonly OnlineshoppingContext _context;

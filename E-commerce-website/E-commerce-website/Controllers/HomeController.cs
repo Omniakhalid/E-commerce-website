@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace E_commerce_website.Controllers
 {
@@ -16,16 +18,21 @@ namespace E_commerce_website.Controllers
     {
         // private readonly ILogger<HomeController> _logger;
         private readonly OnlineshoppingContext _context;
+        private readonly ClaimsPrincipal _user;
 
-        public HomeController(OnlineshoppingContext context)
+        public HomeController(OnlineshoppingContext context, IHttpContextAccessor contextAccessor)
         {
             // _logger = logger;
             _context = context;
+            _user = contextAccessor.HttpContext.User;
 
         }
 
         public async Task<IActionResult> Index()
         {
+            if (_user.IsInRole("Vendor"))
+                return RedirectToAction("Index", "Products", new { area = "ProductArea" });
+
             var onlineshoppingContext = _context.Products.Include(c => c.ProductCategory);
 
             var mylist = _context.ProductCategories.Where(c=>c.CategoryName != null).ToList();

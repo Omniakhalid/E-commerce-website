@@ -10,5 +10,8 @@ namespace E_commerce_website.Repositories
         OrderDetail GetById(int orderId,int ProudctId);
 
         void Remove(int orderId, int proudctId);
+
+        void RemoveRange(int orderId);
+
     }
 }

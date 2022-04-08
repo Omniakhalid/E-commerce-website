@@ -56,5 +56,20 @@ namespace E_commerce_website.Repositories
 
             }
         }
+
+        public void RemoveRange(int orderId)
+        {
+            try
+            {
+                var orderItemsOptions = _context.OrderItemsOptions.Where(c => c.OrderID == orderId);
+                _context.RemoveRange(orderItemsOptions);
+                _context.SaveChanges();
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@
 
 
 <body style="background-color:white">
-     
+
 <div class="container">
         <div class="heading_container heading_center" style="margin:60px">
         <h2>
@@ -16,7 +16,12 @@
     @foreach(var item in Model){
         <div class="card mt-3" style="width:700px">
             <div class="card-header">
+                
             Date : @item.OrderDate
+            <div style="float:right;"> 
+                       <a asp-action="Delete" asp-controller="Orders" asp-route-id= item.itemid> <i class="fa fa-solid fa-delete-left fa-lg"></i> </a>
+
+            </div>
             </div>
             <div class="card-body">
                         @foreach(var order in item.OrderDetails)
@@ -38,7 +43,9 @@
                                     </div>
                                      <div class="col-5">
                                         <img class="card-img" style="float:right;width:70%" src="~/dbImages/@order.Product.ProductImage"/>
+
                                     </div>
+                                    
                                 </div>
                                 <br />
                                 <hr />

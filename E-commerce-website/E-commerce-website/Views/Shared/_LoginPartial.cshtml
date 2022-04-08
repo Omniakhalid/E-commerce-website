@@ -3,25 +3,53 @@
 @inject SignInManager<websiteUser> SignInManager
 @inject UserManager<websiteUser> UserManager
 
-
 <ul class="navbar-nav mr-auto">
 @if (SignInManager.IsSignedIn(User))
 {
      var currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
-        <li class="nav-item ">
-            <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Orders"  asp-action="Index">Orders</a>
-        </li>
+     
+     if(await UserManager.IsInRoleAsync(currentUser,"User"))
+        {
+            <li class="nav-item ">
+                <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Orders"  asp-action="Index"> <i class="fa fa-solid fa-table-list"></i>Orders</a>
+            </li>
 
-        <li class="nav-item ">
+            <li class="nav-item ">
                                        
-            <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Cart" asp-action="Index"> <i class="fa fa-cart-flatbed"></i> Cart</a>
-        </li>
-         if (UserManager.GetUserAsync(User).Result.Userimage != null)
+                <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Cart" asp-action="Index"> <i class="fa fa-cart-flatbed"></i> Cart</a>
+            </li>
+
+        }
+        else if (await UserManager.IsInRoleAsync(currentUser,"Vendor"))
+        {
+               <li class="nav-item">
+                    <a class="nav-link text-dark " asp-action="Index" asp-controller="Products" asp-area="ProductArea">
+                        <i  class="fa fa-fw fa-home"></i> Products
+                     </a>
+
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link text-dark " asp-action="GetOrders" asp-controller="Products" asp-area="ProductArea">
+                        <i class="fa fa-solid fa-table-list"></i>  Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark " asp-action="Create" asp-controller="Products" asp-area="ProductArea">
+                        <i class="fa fa-solid fa-square-plus"></i> Add Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark " asp-action="Options" asp-controller="Products" asp-area="ProductArea">
+                        <i class="fa fa-solid fa-square-plus"></i> Add Options
+                     </a>
+                </li>
+        }
+        if (UserManager.GetUserAsync(User).Result.Userimage != null)
         {
             <li class="nav-item ">
                     <img class="rounded-circle"  alt = "profile" style="width:40px; height:40px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.Userimage))" />
                 
-     </li>
+           </li>
         }
      <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> @currentUser.UserFirstName </a>

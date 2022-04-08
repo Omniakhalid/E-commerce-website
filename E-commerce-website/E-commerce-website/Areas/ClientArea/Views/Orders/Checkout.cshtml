@@ -30,37 +30,10 @@
                            @* <input type="text" hidden class="form-control" name="OrderAmount"  value=@Model> 
                        *@
                              
-                           <div class="input-group  mb-3 mx-3">
-                               <div class="row">
-                                   <div class="col-5">
+                    
 
-                                         <label> <input type="radio" class="btn-check" name="colorCheckbox" value="Cash" checked> Cash</label>
-                                   </div>
-                                   <div class="col-5">
-                                         <label> <input type="radio" class="btn-check" name="colorCheckbox" value="PayPal"> PayPal</label>
 
-                                   </div>
-                               </div>
-                           
-                               </div>
-
-                   @*     <div class="input-group  mb-3 mx-3 form-b" style="display: none"> 
-
-                            <form action="/your-server-side-code"  method="POST">
-                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                        data-key="xxx"
-                                        data-content = "2 Tishirts"
-                                        data-amount="@Model"
-                                        data-name="Payment Details"         
-                                        data-locale="auto">
-                                    </script>
-                                    <script>
-                                        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                                    </script>
-                                    <button type="submit" class="btn btn-primary"> PayPal Details</button>
-                             </form>
-
-                        </div>*@
+                   
 
                         <div class="input-group  mb-3 mx-3">
 
@@ -92,19 +65,3 @@
 </body>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
-            $(document).ready(function() {
-                $('input[name=colorCheckbox]:radio').change(function(e) {
-                let value = e.target.value.trim()
-
-                switch (value) {
-                    case 'PayPal':
-                    $('.form-b').show()
-                    break;
-                    default:
-                    $('.form-b').hide()
-                    break;
-                }
-                })
-            })
-</script>

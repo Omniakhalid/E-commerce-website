@@ -14,8 +14,8 @@ namespace E_commerce_website.Models
         public Vendor()
         {
             Products = new HashSet<Product>();
+          
             VendorRegisterDate = DateTime.Now;
-
         }
 
         [Key]

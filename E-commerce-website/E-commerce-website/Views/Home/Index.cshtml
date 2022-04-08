@@ -131,7 +131,7 @@
                                             <div class="card-footer">
                                               <div class="wcf-left"><span class="price" style="padding-left: 10px;"> Price :${result[i].productPrice} EGP</span></div>
                                               <br><br>
-                                        <a href="ClientArea/Cart/AddItemsIntoCart/${result[i].productID}" class="btn btn-primary btn-lg" >
+                                        <a href="ClientArea/Products/Details/${id}" class="btn btn-primary btn-lg" >
                                             Add To Cart <i class="fa fa-cart-plus"></i>
                                         </a>                                   
                                         </div>
@@ -181,7 +181,7 @@
                                               <div class="wcf-left"><span class="price" style="padding-left: 10px;"> Price :@item.ProductPrice EGP</span></div>
                                               <br><br>
 
-                                       <a  class="btn btn-primary btn-lg" asp-area="ClientArea" asp-controller="Cart" asp-action="AddItemsIntoCart"  asp-route-id=@item.ProductID >
+                                       <a  class="btn btn-primary btn-lg" asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID >
                                            Add To Cart <i class="fa fa-cart-plus"></i>
                                        </a>   
 

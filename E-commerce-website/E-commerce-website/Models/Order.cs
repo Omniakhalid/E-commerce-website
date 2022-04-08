@@ -22,7 +22,7 @@ namespace E_commerce_website.Models
         public int OrderID { get; set; }
         public int UserID { get; set; }
         [Column(TypeName = "money")]
-        public decimal OrderAmount  { get; set; }
+        public decimal OrderAmount { get; set; }
         [Required]
         [StringLength(100)]
         public string ShippingAddress { get; set; }
