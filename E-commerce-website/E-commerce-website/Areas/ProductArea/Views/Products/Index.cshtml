@@ -22,6 +22,7 @@
                  
                 <a  asp-action="Details" asp-route-id="@item.ProductID" ><img src="~/dbImages/@item.ProductImage" alt="Product" class="img-responsive" /></a> 
             </div>
+            <br><br>
             <div class="wsk-cp-text">
                <div class="row  justify-content-between" style="color:white" >
                    <div class="col-3"  >
@@ -37,7 +38,7 @@
 
 
               <div class="title-product" >
-                <h2 style="color:steelblue">@Html.DisplayFor(modelItem => item.ProductName)</h2>
+                <h2 style="color:#f89cab">@Html.DisplayFor(modelItem => item.ProductName)</h2>
               </div>
              
               <div class="card-footer" style="background-color: white;">
