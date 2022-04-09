@@ -2,6 +2,11 @@
 <link rel="stylesheet" href="css/style.css">
 
 <link rel="stylesheet" href="~/css/styles.css">
+<style>
+
+
+}
+</style>
  <div class="container">
      <div class="mb-3">
 
@@ -9,8 +14,8 @@
             <br/>
      </div>
 <table class="table">
-    <thead>
-        <tr class="table-Danger">
+    <thead style="background-color:#f89cab">
+        <tr class="table-Danger" >
             <th>
                 @Html.DisplayNameFor(model => model.OrderAmount)
             </th>
@@ -52,7 +57,7 @@
             </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody  >
 @foreach (var item in Model) {
         <tr>
             <td>

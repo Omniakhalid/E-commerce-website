@@ -159,10 +159,10 @@
       <div class="row" id="productCard">
          
                           @foreach(var item in Model){
-                                      <div class="col-md-3">
+                                      <div class="col-md-3" style="margin-bottom:60px">
                                         <div class="wsk-cp-product">
                                           <div class="wsk-cp-img">
-                                        <div class="img-box">
+                                        <div class="img-box" style="margin-bottom:2px">
 
                                           <a asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID>
 
@@ -173,22 +173,23 @@
                                           </div>
                                           <div class="wsk-cp-text">
             
-                                            <div class="title-product">
+                                            <div class="title-product" style="margin-top:1px">
                                               <h3>@item.ProductName</h3>
                                             </div>
            
                                             <div class="card-footer">
-                                              <div class="wcf-left"><span class="price" style="padding-left: 10px;"> Price :@item.ProductPrice EGP</span></div>
+                                              <div class="wcf-left"><span class="price" style="padding-left: 10px; color:black"> Price :@item.ProductPrice EGP</span></div>
                                               <br><br>
 
-                                       <a  class="btn btn-primary btn-lg" asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID >
-                                           Add To Cart <i class="fa fa-cart-plus"></i>
+                                       <a  class="btn btn-primary btn-lg" style="background-color:#f89cab;border-radius:5px;border-color:#f89cab;font-size:18px" asp-action="Details" asp-controller="Products" asp-area = "ClientArea" asp-route-id=@item.ProductID >
+                                           Add To Cart <i class="fa fa-cart-plus" style="color:white"></i>
                                        </a>   
 
                                         </div>
                                        </div>
                                       </div>
                                      </div>
+
                                      }
                           </div>
                          </div>
@@ -202,7 +203,7 @@
 
       <div class="btn-box">
         <a href="">
-          <button type="button" class="btn btn-primary btn-lg btn-block">View All Products</button>
+          <button type="button" class="btn btn-primary btn-lg btn-block" style="background-color:#f89cab;border-radius:5px;border-color:#f89cab;font-size:18px;width:50%;margin-left:25%">View All Products</button>
         </a>
       </div>
 
