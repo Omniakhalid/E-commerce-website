@@ -17,7 +17,7 @@
       <div class="row">
           @foreach (var item in Model) {
         <div class="col-3">
-          <div class="wsk-cp-product">
+          <div class="wsk-cp-product" style="margin-top:20px;">
             <div class="wsk-cp-img">
                  
                 <a  asp-action="Details" asp-route-id="@item.ProductID" ><img src="~/dbImages/@item.ProductImage" alt="Product" class="img-responsive" /></a> 
@@ -38,7 +38,7 @@
 
 
               <div class="title-product" >
-                <h2 style="color:#f89cab">@Html.DisplayFor(modelItem => item.ProductName)</h2>
+                <h4 style="color:#f89cab">@Html.DisplayFor(modelItem => item.ProductName)</h4>
               </div>
              
               <div class="card-footer" style="background-color: white;">

@@ -13,20 +13,11 @@
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- 
-
+<link rel="stylesheet" href="~/css/CartStyle.css"> 
 </head>
-   <div style ="margin-left:200px" >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Edit Product</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-       <form asp-action="Edit" asp-controller="Products" method="post" enctype="multipart/form-data" style="font-size:13px;color:gray">
+  <div class="cart col-md-8">
+          
+       <form asp-action="Edit" asp-controller="Products" method="post" enctype="multipart/form-data" style="font-size:18px;">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="ProductID" style="font-size:13px"/>
             <div class="form-group">
@@ -79,17 +70,21 @@
                 <select asp-for="VendorID" class="form-control" asp-items="ViewBag.VendorID" style="font-size:13px;height:34px"></select>
                 <span asp-validation-for="VendorID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" style="margin-left:20px;font-size:13px"/>
-                             <a asp-action="Index" class="btn btn-secondary" style="background-color: #007bff;border-color:#007bff;margin-left:20px;font-size:13px">Back to List</a>
-      
-            </div>
+           
+             <div class="form-group">
+                <div class="row justify-content-between">
+                     <div col-4>
+                        <a asp-action="Index" class="btn " style="background-color:#f89cab;border-color:#f89cab;border-radius:5px;font-size:18px">Back to List</a>
+                    </div>
+
+                    <div col-4>
+                        <input type="submit" value="Save" class="btn"  style="background-color:#f89cab;border-color:#f89cab;border-radius:5px;font-size:18px"; border-radius:8px"/>
+                    </div>
+                   
+                </div>
+          </div>
         </form>
-        </div>
-        
-      </div>
-    </div>
-  </div>
+     </div>
 
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
