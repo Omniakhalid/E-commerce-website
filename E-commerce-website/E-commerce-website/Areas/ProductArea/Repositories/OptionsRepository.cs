@@ -1,7 +1,7 @@
 ﻿using E_commerce_website.Areas.ProductArea.ViewModels;
 using E_commerce_website.Context;
 using E_commerce_website.Models;
-
+using System.Linq;
 namespace E_commerce_website.Areas.ProductArea.Repositories
 {
     public class OptionsRepository : IOptionsRepository
@@ -16,13 +16,14 @@ namespace E_commerce_website.Areas.ProductArea.Repositories
         {
             Option op = new Option
             {
-                OptionID = optionViewModel.OptionID,
+                //OptionID = (_context.Options.LastOrDefault(x=>x.OptionID)) + 1,
+                OptionID = (_context.Options.OrderByDescending(u => u.OptionID).FirstOrDefault().OptionID) + 1,
                 OptionName = optionViewModel.OptionName,
                 OptionGroupID = optionViewModel.OptionGroupID,
             };
             ProductOption productOption = new ProductOption()
             {
-                OptionID = optionViewModel.OptionID,
+                OptionID = op.OptionID,
                 ProductID = optionViewModel.ProductID,
                 id = optionViewModel.id
             };

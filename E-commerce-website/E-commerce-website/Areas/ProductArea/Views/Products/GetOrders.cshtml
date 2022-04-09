@@ -23,9 +23,9 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.OrderStatus)
             </th>*@
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.OrderTrakingNumber)
-            </th>
+            </th>*@
             @*<th>
                 @Html.DisplayNameFor(model => model.OrderCountry)
             </th>*@
@@ -42,7 +42,7 @@
                 @Html.DisplayNameFor(model => model.User.UserEmail)
             </th>
             <th>
-                 
+                 More Details
             </th>
             <th>
                   
@@ -67,9 +67,9 @@
            @* <td>
                 @Html.DisplayFor(modelItem => item.OrderStatus)
             </td>*@
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.OrderTrakingNumber)
-            </td>
+            </td>*@
             @*<td>
                 @Html.DisplayFor(modelItem => item.OrderCountry)
             </td>*@
@@ -86,6 +86,9 @@
                 @Html.DisplayFor(modelItem => item.User.UserAddress)
             </td>
             <td>
+                <a asp-action="OptionDetails" asp-route-OrderID="@item.OrderID" asp-route-UserID="@item.UserID">More Details</a>
+            </td>
+            @*<td>
                
                  <a  asp-action="Edit" asp-route-id="@item.OrderID"><i class="fa  fa-edit circle-icon"></i></a> 
                  </td>
@@ -96,7 +99,7 @@
             <td>
 
                 <a  asp-action="Delete" asp-route-id="@item.OrderID"><i class="fa fa-trash circle-icon"></i></a>
-            </td>
+            </td>*@
 
             
         </tr>

@@ -28,5 +28,16 @@ namespace E_commerce_website.Areas.ProductArea.Repositories
                           select o).ToList();
             return Orders;
         }
+        public List<OrderItemsOption> OptionDetails(int OrderID, int UserID)
+        {
+            var Details = _context.OrderItemsOptions
+                                                .Where(p => p.OrderID == OrderID && p.UserID == UserID)
+                                                .Include(po => po.Order)
+                                                .Include(p => p.Product).ToList();
+            //var Details = _context.OrderItemsOptions
+            //                                    .Where(p => p.OrderID == OrderID)
+            //                                    .Include(p => p.Product).ToList();
+            return Details;
+        }
     }
 }

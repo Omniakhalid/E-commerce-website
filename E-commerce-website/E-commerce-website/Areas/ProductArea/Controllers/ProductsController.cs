@@ -27,6 +27,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
         private IOptionsRepository _optionsRepository;
         private IOrdersRepository _ordersRepository;
         private readonly string _vendor;
+        private Vendor _vendorData;
         public ProductsController(OnlineshoppingContext context,
             IWebHostEnvironment hostEnvironment, IHttpContextAccessor contextAccessor,
             IProductRepository productRepository, IOptionsRepository optionsRepository
@@ -39,6 +40,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             _optionsRepository = optionsRepository;
             _ordersRepository = ordersRepository;
             _vendor = _contextAccessor.HttpContext.User.Identity.Name;
+            _vendorData = _context.Vendors.FirstOrDefault(v=>v.VendorEmail == _vendor);
         }
 
         // GET: ProductArea/Products
@@ -51,7 +53,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
         public IActionResult Create()
         {
             ViewData["ProductCategoryID"] = new SelectList(_context.ProductCategories, "CategoryID", "CategoryName");
-            ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName");
+            //ViewData["VendorID"] = new SelectList(_context.Vendors, "VendorID", "VendorName");
             return View();
         }
 
@@ -68,6 +70,7 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
             {
                 await productViewModel.ProductImageFile.CopyToAsync(fileStream);
             }
+            productViewModel.VendorID = _vendorData.VendorID;
             _productRepository.Add(productViewModel);
             return RedirectToAction(nameof(Index));
         }
@@ -134,6 +137,17 @@ namespace E_commerce_website.Areas.ProductArea.Controllers
         {
             return View(_ordersRepository.GetAll(_vendor));
         }
+        public IActionResult OptionDetails(int OrderID, int UserID)
+        {
+            var Details = _context.OrderItemsOptions
+                                                .Where(p => p.OrderID == OrderID && p.UserID == UserID)
+                                                .Include(po => po.Order)
+                                                .Include(p => p.Product)
+                                                .Include(op=>op.Option)
+                                                .ToList();
+            return View(Details);
+        }
+
         public IActionResult Options()
         {
             ViewData["ProductID"] = new SelectList(_productRepository.GetAll(_vendor), "ProductID", "ProductName");

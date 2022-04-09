@@ -62,7 +62,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "(LocalDb)\\MSSQLLocalDB.OnlineShopping",
+   "UiHint": "DESKTOP-P84ETB9\\MSSQLSERVER01.OnlineShopping",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,
