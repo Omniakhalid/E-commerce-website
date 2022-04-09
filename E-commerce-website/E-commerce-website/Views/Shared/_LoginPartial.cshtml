@@ -7,8 +7,22 @@
 @if (SignInManager.IsSignedIn(User))
 {
      var currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
-     
-     if(await UserManager.IsInRoleAsync(currentUser,"User"))
+      if (await UserManager.IsInRoleAsync(currentUser,"Admin"))
+        {
+         <li class="nav-item ">
+                                     
+                <a class="nav-link text-dark float-right" asp-area="AdminArea" asp-controller="Roles" asp-action="Index"> Manage Roles </a>
+            </li> 
+             <li class="nav-item ">
+                                     
+                <a class="nav-link text-dark float-right" asp-area="AdminArea" asp-controller="Users" asp-action="Index"> Manage Users </a>
+            </li> 
+             <li class="nav-item ">
+                                     
+                <a class="nav-link text-dark float-right" asp-area="AdminArea" asp-controller="Users" asp-action="Vendor"> Manage Vendors </a>
+            </li> 
+        }
+     else if(await UserManager.IsInRoleAsync(currentUser,"User"))
         {
             <li class="nav-item ">
                 <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Orders"  asp-action="Index"> <i class="fa fa-solid fa-table-list"></i>Orders</a>
@@ -18,6 +32,7 @@
                                        
                 <a class="nav-link text-dark float-right" asp-area="ClientArea" asp-controller="Cart" asp-action="Index"> <i class="fa fa-cart-flatbed"></i> Cart</a>
             </li>
+            
 
         }
         else if (await UserManager.IsInRoleAsync(currentUser,"Vendor"))
@@ -43,7 +58,9 @@
                         <i class="fa fa-solid fa-square-plus"></i> Add Options
                      </a>
                 </li>
+                
         }
+        
         if (UserManager.GetUserAsync(User).Result.Userimage != null)
         {
             <li class="nav-item ">

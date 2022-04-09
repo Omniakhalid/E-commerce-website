@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Roles";
+}
+
+@model IEnumerable<IdentityRole>
+<h1>Roles</h1>
+
+<table class="table table-striped mt-4">
+    
+        <tr class="bg-primary text-white">
+            <th>ID</th>
+            <th>Role Name</th>
+        </tr>
+   
+        @foreach(var role in Model)
+        {
+            <tr>
+                <td>
+                    @role.Id
+                </td>
+                <td>@role.Name</td>
+            </tr>
+            
+        }
+   
+</table>
