@@ -57,23 +57,40 @@ namespace E_commerce_website.Areas.AdminArea.Controllers
 
         public async Task<IActionResult> ManageRoles(string userId)
         {
-            var user=await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
                 return NotFound();
             var roles = await _roleManager.Roles.ToListAsync();
             var viewmodel = new UserRoles
             {
                 UserId = user.Id,
-            UserName = user.UserName,
-            Roles=roles.Select(role=>new RoleViewModel
-            {
-                RoleId=role.Id,
-                RoleName=role.Name,
-                IsSelected=_userManager.IsInRoleAsync(user,role.Name).Result
+                UserName = user.UserName,
+                Roles = roles.Select(role => new RoleViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    IsSelected = _userManager.IsInRoleAsync(user, role.Name).Result
 
-            }).ToList()
+                }).ToList()
             };
             return View(viewmodel);
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<IActionResult> ManageRoles(UserRoles model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+                return NotFound();
+            var UserRoles = await _userManager.GetRolesAsync(user);//get all assign roles
+            foreach(var role in model.Roles)
+            {
+                if (UserRoles.Any(r => r == role.RoleName) && !role.IsSelected)
+                    await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                if (!UserRoles.Any(r => r == role.RoleName) && role.IsSelected)
+                    await _userManager.AddToRoleAsync(user, role.RoleName);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
 
