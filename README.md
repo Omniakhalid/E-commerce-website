@@ -1,9 +1,9 @@
 # E-commerce-website
  
-is an ecommerce web based application for buying and selling products with different categories over internet and also provide online payment.
+it is an ecommerce web based application for buying and selling products with different categories over internet and also provide online payment.
 via stripe
 <hr>
-<h3> Technologyies </h3>
+<h3> Technologies </h3>
 ASP.NET MVC Core 5, EF Core, HTML ,css, js and strip payment gateway
 <hr>
 <h3> Patterns </h3>
@@ -13,7 +13,7 @@ DI, Repository Pattern and MVC
 
 - #### Admin :
   
-  View all Vendors, Users and change role of user or vendor .
+  View all Vendors, Users and change the role of user or vendor .
 
 - #### Vendor :
   
